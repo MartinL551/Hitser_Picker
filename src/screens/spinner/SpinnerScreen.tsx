@@ -6,35 +6,35 @@ export const SpinnerScreen = () => {
   const { hitserValues, setHitserValues } = React.useContext(hitserContext);
 
   return (
-    <View>
-      <Text>
-        Context value: 
-        { hitserValues.map((hitser, index) => <Button key={index} onPress={() => hideOnPress(index, hitserValues, setHitserValues)} title={hitser.name + hitser.show} />)}
-      </Text>
+    <View className={styles.getStartedContainer}>
+      <View className={styles.helpContainer}>
+        <Text>
+            Context value: 
+          { hitserValues.map((hitser, index) => <Button key={index} onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)} title={hitser.name + hitser.show} />)}
+        </Text>
+      </View>
+
     </View>
   );
 };
 
 
-function hideOnPress(index, currentValues, setHitserValues) {
-    const initialHisterState = [
-      {
-          icon: 'rock',
-          name: 'Rock',
-          type: 'Rock',
-          show: true,
-      },
-      {
-          icon: 'pop',
-          name: 'Pop',
-          type: 'Pop',
-          show: false,
-      }
-  ]
-
-  console.log('updating state');
-
-  setHitserValues(initialHisterState)
-
+function hideOnPress(hitser, hitserIndex, currentValues, setHitserValues) {
+  let newHitser = {...hitser}
+  newHitser.show = false
+  let newValues = [...currentValues]
+  newValues[hitserIndex] = newHitser
+  setHitserValues(newValues);
 }
+
+const styles = {
+  codeHighlightContainer: `rounded-md px-1`,
+  getStartedContainer: `items-center mx-12 pt-5`,
+  getStartedText: `text-lg leading-6 text-center`,
+  helpContainer: `items-center mx-5 mt-4`,
+  helpLink: `py-4`,
+  helpLinkText: `text-center`,
+  homeScreenFilename: `my-2`,
+};
+
 
