@@ -1,6 +1,7 @@
 import { hitserContext } from '@/store/HisterContext';
 import React from 'react';
 import { Text, View, Button } from 'react-native';
+import { Spinner } from '@/components/Spinner/Spinner';
 
 export const SpinnerScreen = () => {
   const { hitserValues, setHitserValues } = React.useContext(hitserContext);
@@ -13,6 +14,8 @@ export const SpinnerScreen = () => {
           { hitserValues.map((hitser, index) => <Button key={index} onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)} title={hitser.name + hitser.show} />)}
         </Text>
       </View>
+
+        <Spinner/>
 
     </View>
   );

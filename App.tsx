@@ -3,14 +3,17 @@ import { StatusBar } from 'expo-status-bar';
 import { HitserProvider } from '@/store/HisterContext';
 import { SpinnerScreen } from '@/screens/spinner/SpinnerScreen';
 import './global.css';
-import { verifyInstallation } from 'nativewind';
+import {
+  GestureHandlerRootView,
+} from 'react-native-gesture-handler';
 
 
 export default function App() {
-      verifyInstallation();
   return (
-    <HitserProvider>
-      <SpinnerScreen />
-    </HitserProvider>
+    <GestureHandlerRootView>
+      <HitserProvider>
+        <SpinnerScreen />
+      </HitserProvider>
+    </GestureHandlerRootView>
   );
 }
