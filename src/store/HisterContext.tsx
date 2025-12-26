@@ -25,11 +25,11 @@ export const hitserContext = React.createContext();
 export const HitserProvider = ({ children }) => {
 
     const [hitserValues, setHitserValues] = React.useState(initialHisterState);
-    const [spinnerPosition, spinnerPosition] = React.useState(initialSpinnerPosition);
+    const [spinnerPosition, setSpinnerPosition] = React.useState(initialSpinnerPosition);
 
     return (
                 // this is the provider providing state
-        <hitserContext.Provider value={{hitserValues, setHitserValues}}>
+        <hitserContext.Provider value={{hitserValues, setHitserValues, spinnerPosition, setSpinnerPosition}}>
             {children}
         </hitserContext.Provider>
     );
