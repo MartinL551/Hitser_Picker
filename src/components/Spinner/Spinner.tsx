@@ -1,68 +1,45 @@
-import React from 'react';
-import { Text, View } from 'react-native';
 import { StyleSheet } from 'react-native';
-import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
-import { hitserContext } from '@/store/HisterContext';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
-  withRepeat,
-  cancelAnimation,
-  Easing,
-  interpolate
 } from 'react-native-reanimated';
-import { scheduleOnRN } from 'react-native-worklets'
-import { forEach } from 'eslint.config';
+
+const END_POSITION = 200;
 
 export const Spinner = () => {
+  const onLeft = useSharedValue(true);
+  const position = useSharedValue(0);
 
-
-    const angle = useSharedValue(0);
-    const velocity = useSharedValue(0);
-    const [velocityToRender, setVelocity] = React.useState(0);
-    const [currentAngle, setAngle] = React.useState(0);
-    const MAX_VELOCITY = 30;
-    const { spinnerPosition, setSpinnerPosition } = React.useContext(hitserContext);
-
-
-    const panGesture = Gesture.Pan()
-        .onStart((e) => {
-           angle.value = 0;
-        }) 
-        .onUpdate((e) => {
-            setVelocity(e.velocityX)
-
-            if(MAX_VELOCITY > e.velocityX){
-                velocity.value = MAX_VELOCITY;
-            } else {
-                velocity.value = Math.floor(e.velocityX);
-            }
-        })
-        .onEnd((e) => { 
-            let newAngle = angle.value + velocity.value;
-
-            angle.value = newAngle;
-        });
-    
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{ rotateZ: interpolate(angle.value, [0, 10000], [0, 360]) + 'deg' }],
-        }
+  const panGesture = Gesture.Pan()
+    .onUpdate((e) => {
+      if (onLeft.value) {
+        position.value = e.translationX;
+      } else {
+        position.value = END_POSITION + e.translationX;
+      }
     })
+    .onEnd((e) => {
+      if (position.value > END_POSITION / 2) {
+        position.value = withTiming(END_POSITION, { duration: 10000 });
+        onLeft.value = false;
+      } else {
+        position.value = withTiming(0, { duration: 100 });
+        onLeft.value = true;
+      }
+    });
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: position.value + 'deg' }],
+  }));
 
   return (
     <GestureDetector gesture={panGesture}>
-      <Animated.View style={[styles.box, animatedStyle]} >
-        <Text>{velocityToRender}</Text>
-      </Animated.View>
+      <Animated.View style={[styles.box, animatedStyle]} />
     </GestureDetector>
-    
   );
-};
-
-
-
+}
 
 const styles = StyleSheet.create({
   box: {
