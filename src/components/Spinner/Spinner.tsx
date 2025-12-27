@@ -1,45 +1,55 @@
-import { StyleSheet } from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import React from 'react';
+import { Text, View,  StyleSheet  } from 'react-native';
+
+import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
+import { hitserContext } from '@/store/HisterContext';
 import Animated, {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
+  withRepeat,
+  cancelAnimation,
+  Easing,
+  interpolate
 } from 'react-native-reanimated';
 
-const END_POSITION = 200;
-
 export const Spinner = () => {
-  const onLeft = useSharedValue(true);
-  const position = useSharedValue(0);
 
-  const panGesture = Gesture.Pan()
-    .onUpdate((e) => {
-      if (onLeft.value) {
-        position.value = e.translationX;
-      } else {
-        position.value = END_POSITION + e.translationX;
-      }
-    })
-    .onEnd((e) => {
-      if (position.value > END_POSITION / 2) {
-        position.value = withTiming(END_POSITION, { duration: 10000 });
-        onLeft.value = false;
-      } else {
-        position.value = withTiming(0, { duration: 100 });
-        onLeft.value = true;
-      }
-    });
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ rotate: position.value + 'deg' }],
-  }));
+    const angle = useSharedValue(0);
+    const velocity = useSharedValue(0);
+
+    const MAX_VELOCITY = 30;
+    const MAX_ANGLE = 360;
+
+
+    const panGesture = Gesture.Pan()
+      .onUpdate((e) => {
+
+        velocity.value = e.velocityX;
+        angle.value = e.translationX;
+      })
+      .onEnd((e) => { 
+       
+        angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
+      })
+
+
+   
+
+    const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
 
   return (
     <GestureDetector gesture={panGesture}>
-      <Animated.View style={[styles.box, animatedStyle]} />
-    </GestureDetector>
+      <Animated.View style={[styles.box, animatedStyle]}>
+
+      </ Animated.View>
+    </GestureDetector> 
   );
-}
+};
+
+
+
 
 const styles = StyleSheet.create({
   box: {
