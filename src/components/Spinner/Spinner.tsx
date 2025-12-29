@@ -18,9 +18,7 @@ export const Spinner = () => {
 
     const angle = useSharedValue(0);
     const velocity = useSharedValue(0);
-
-    const MAX_VELOCITY = 30;
-    const MAX_ANGLE = 360;
+    const { spinnerPosition, setSpinnerPosition } = React.useContext(hitserContext); 
 
 
     const panGesture = Gesture.Pan()
@@ -30,8 +28,9 @@ export const Spinner = () => {
         angle.value = e.translationX;
       })
       .onEnd((e) => { 
-       
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
+        let finalAngle = velocity.value % 360;
+        setSpinnerPosition(finalAngle);
       })
 
 
@@ -42,7 +41,6 @@ export const Spinner = () => {
   return (
     <GestureDetector gesture={panGesture}>
       <Animated.View style={[styles.box, animatedStyle]}>
-
       </ Animated.View>
     </GestureDetector> 
   );
@@ -54,7 +52,7 @@ export const Spinner = () => {
 const styles = StyleSheet.create({
   box: {
     height: 120,
-    width: 120,
+    width: 30,
     backgroundColor: '#b58df1',
     borderRadius: 20,
     marginBottom: 30,

@@ -34,3 +34,7 @@ export const HitserProvider = ({ children }) => {
         </hitserContext.Provider>
     );
 }; 
+
+const calculateHisterPositions = (histerState) => {
+
+}
