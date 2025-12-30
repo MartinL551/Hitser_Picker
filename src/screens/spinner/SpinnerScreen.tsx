@@ -37,17 +37,31 @@ function hideOnPress(hitser, hitserIndex, currentValues, setHitserValues) {
 
 function isSelectedHister(spinnerPosition, histerValues, index) {
   let activeAngleDeg = 360/histerValues.length;
-  let currentAngleDeg = activeAngleDeg * index;
+  let currentAngleDeg = activeAngleDeg * (index + 1);
   let minAngle = currentAngleDeg - (activeAngleDeg/2);
   let maxAngle = currentAngleDeg + (activeAngleDeg/2);
 
   console.log(index, minAngle, maxAngle);
 
-  if (minAngle <= spinnerPosition && maxAngle >= spinnerPosition) {
+  if (isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
     return 'true';
   }
+
   return 'false';
 }
+
+
+function isAngleInRange(angle, max, min){
+  angle %= 360
+  max %= 360
+  min %= 360
+
+  if(min <= max) {
+    return min <= angle && max >= angle;
+  } else {
+    return angle >= min || angle <= max;
+  }
+} 
 
 const styles = {
   codeHighlightContainer: `rounded-md px-1`,
