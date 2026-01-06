@@ -6,13 +6,19 @@ const initialHisterState = [
         icon: 'rock',
         name: 'Rock',
         type: 'Rock',
-        show: true,
+        active: true,
     },
     {
         icon: 'pop',
         name: 'Pop',
         type: 'Pop',
-        show: true,
+        active: true,
+    },
+    {
+        icon: 'celebrations',
+        name: 'Celebrations',
+        type: 'celebrations',
+        active: true,
     }
 ]
 
@@ -28,13 +34,9 @@ export const HitserProvider = ({ children }) => {
     const [spinnerPosition, setSpinnerPosition] = React.useState(initialSpinnerPosition);
 
     return (
-                // this is the provider providing state
+      
         <hitserContext.Provider value={{hitserValues, setHitserValues, spinnerPosition, setSpinnerPosition}}>
             {children}
         </hitserContext.Provider>
     );
 }; 
-
-const calculateHisterPositions = (histerState) => {
-
-}
