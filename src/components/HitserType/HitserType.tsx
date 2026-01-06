@@ -1,17 +1,21 @@
 import { hitserContext } from '@/store/HisterContext';
 import React from 'react';
 import { Text, View, Button } from 'react-native';
+import { HitserPopup } from '../HitserPopup/HitserPopup';
 
 
 export const HitserType = ({hitser, index}) => {
   const { hitserValues, setHitserValues, spinnerPosition } = React.useContext(hitserContext);
 
-  console.log(hitser);
-  console.log(index);
+  if(isSelectedHister(spinnerPosition, hitserValues, index)) {
+    return (
+        <HitserPopup title={hitser.name} message={hitser.message} /> 
+    );
+  }
 
   return (
     <View>
-        <Text>Chossen by spinner: {isSelectedHister(spinnerPosition, hitserValues, index)}
+        <Text>Chossen by spinner: {}
             <Button onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)} title={hitser.name + hitser.active} />
         </Text>    
     </View>
@@ -35,12 +39,11 @@ function isSelectedHister(spinnerPosition, histerValues, index) {
   console.log('index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
 
   if (isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
-    return 'true';
+    return true;
   }
 
-  return 'false';
+  return false;
 }
-
 
 function isAngleInRange(angle, max, min){
   angle %= 360

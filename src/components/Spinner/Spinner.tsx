@@ -23,19 +23,15 @@ export const Spinner = () => {
 
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
-
         velocity.value = e.velocityX;
         angle.value = e.translationX;
       })
       .onEnd((e) => { 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
         let finalAngle = velocity.value % 360;
-        setSpinnerPosition(finalAngle);
+        setSpinnerPosition(finalAngle);  
       })
-
-
-   
-
+      
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
 
   return (
@@ -45,9 +41,6 @@ export const Spinner = () => {
     </GestureDetector> 
   );
 };
-
-
-
 
 const styles = StyleSheet.create({
   box: {

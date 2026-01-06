@@ -6,18 +6,21 @@ const initialHisterState = [
         icon: 'rock',
         name: 'Rock',
         type: 'Rock',
+        message: 'Rock and roll',
         active: true,
     },
     {
         icon: 'pop',
         name: 'Pop',
         type: 'Pop',
+        message: 'Its Popping off',
         active: true,
     },
     {
         icon: 'celebrations',
         name: 'Celebrations',
         type: 'celebrations',
+        message: 'Celebrations are here',
         active: true,
     }
 ]
