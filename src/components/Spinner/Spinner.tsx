@@ -22,6 +22,7 @@ export const Spinner = () => {
 
 
     const panGesture = Gesture.Pan()
+      .onStart((e) => setSpinnerSpun(false))
       .onUpdate((e) => {
         velocity.value = e.velocityX;
         angle.value = e.translationX;
@@ -33,7 +34,7 @@ export const Spinner = () => {
 
         setTimeout(() => {
           setSpinnerSpun(true);
-        }, velocity.value)
+        }, velocity.value + 500)
       })
 
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))

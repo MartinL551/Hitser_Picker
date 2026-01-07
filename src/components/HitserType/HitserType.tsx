@@ -5,9 +5,9 @@ import { HitserPopup } from '../HitserPopup/HitserPopup';
 
 
 export const HitserType = ({hitser, index}) => {
-  const { hitserValues, setHitserValues, spinnerPosition, spinnerSpun, setSpinnerSpun} = React.useContext(hitserContext);
+  const { hitserValues, setHitserValues, spinnerPosition, spinnerSpun} = React.useContext(hitserContext);
 
-  if(isSelectedHister(spinnerPosition, hitserValues, index, setSpinnerSpun) && spinnerSpun) {
+  if(isSelectedHister(spinnerPosition, hitserValues, index,) && spinnerSpun) {
     return (
         <HitserPopup title={hitser.name} message={hitser.message} /> 
     );
@@ -15,7 +15,7 @@ export const HitserType = ({hitser, index}) => {
 
   return (
     <View>
-        <Text>Chossen by spinner: {}
+        <Text>
             <Button onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)} title={hitser.name + hitser.active} />
         </Text>    
     </View>
@@ -30,22 +30,20 @@ function hideOnPress(hitser, hitserIndex, currentValues, setHitserValues) {
   setHitserValues(newValues);
 }
 
-function isSelectedHister(spinnerPosition, histerValues, index, setSpinnerSpun) {
-  let activeAngleDeg = 360/histerValues.length;
-  let currentAngleDeg = activeAngleDeg * (index + 1);
-  let minAngle = currentAngleDeg - (activeAngleDeg/2);
-  let maxAngle = currentAngleDeg + (activeAngleDeg/2);
+function isSelectedHister(spinnerPosition, histerValues, index) {
+    let activeHisterValues = histerValues.filter((hister) => hister.active === true);
+    let activeAngleDeg = 360/activeHisterValues.length;
+    let currentAngleDeg = activeAngleDeg * (index + 1);
+    let minAngle = currentAngleDeg - (activeAngleDeg/2);
+    let maxAngle = currentAngleDeg + (activeAngleDeg/2);
 
-  console.log('index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
+    console.log('index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
 
-  if (isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
-    setTimeout(() => {
-        setSpinnerSpun(false);
-    }, 5000)
-    return true;
-  }
+    if (isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
+        return true;
+    }
 
-  return false;
+    return false;
 }
 
 function isAngleInRange(angle, max, min){
