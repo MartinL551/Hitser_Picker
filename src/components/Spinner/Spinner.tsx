@@ -18,7 +18,7 @@ export const Spinner = () => {
 
     const angle = useSharedValue(0);
     const velocity = useSharedValue(0);
-    const { spinnerPosition, setSpinnerPosition } = React.useContext(hitserContext); 
+    const { spinnerPosition, setSpinnerPosition, setSpinnerSpun } = React.useContext(hitserContext); 
 
 
     const panGesture = Gesture.Pan()
@@ -29,9 +29,13 @@ export const Spinner = () => {
       .onEnd((e) => { 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
         let finalAngle = velocity.value % 360;
-        setSpinnerPosition(finalAngle);  
+        setSpinnerPosition(finalAngle);
+
+        setTimeout(() => {
+          setSpinnerSpun(true);
+        }, velocity.value)
       })
-      
+
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
 
   return (

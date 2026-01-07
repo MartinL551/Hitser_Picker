@@ -5,9 +5,9 @@ import { HitserPopup } from '../HitserPopup/HitserPopup';
 
 
 export const HitserType = ({hitser, index}) => {
-  const { hitserValues, setHitserValues, spinnerPosition } = React.useContext(hitserContext);
+  const { hitserValues, setHitserValues, spinnerPosition, spinnerSpun, setSpinnerSpun} = React.useContext(hitserContext);
 
-  if(isSelectedHister(spinnerPosition, hitserValues, index)) {
+  if(isSelectedHister(spinnerPosition, hitserValues, index, setSpinnerSpun) && spinnerSpun) {
     return (
         <HitserPopup title={hitser.name} message={hitser.message} /> 
     );
@@ -24,13 +24,13 @@ export const HitserType = ({hitser, index}) => {
 
 function hideOnPress(hitser, hitserIndex, currentValues, setHitserValues) {
   let newHitser = {...hitser}
-  newHitser.show = false
+  newHitser.active = newHitser.active ? false : true;
   let newValues = [...currentValues]
   newValues[hitserIndex] = newHitser
   setHitserValues(newValues);
 }
 
-function isSelectedHister(spinnerPosition, histerValues, index) {
+function isSelectedHister(spinnerPosition, histerValues, index, setSpinnerSpun) {
   let activeAngleDeg = 360/histerValues.length;
   let currentAngleDeg = activeAngleDeg * (index + 1);
   let minAngle = currentAngleDeg - (activeAngleDeg/2);
@@ -39,6 +39,9 @@ function isSelectedHister(spinnerPosition, histerValues, index) {
   console.log('index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
 
   if (isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
+    setTimeout(() => {
+        setSpinnerSpun(false);
+    }, 5000)
     return true;
   }
 
