@@ -8,18 +8,15 @@ export const SpinnerScreen = () => {
   const { hitserValues, setHitserValues, spinnerPosition } = React.useContext(hitserContext);
 
   return (
-    <View className={styles.getStartedContainer}>
-      <View className={styles.helpContainer}>
+    <View className={styles.spinnerContainer}>
+      <Spinner/>
+      <View className={styles.histersContainer}>
         <Text>
-            Spinner Pos From Context: {spinnerPosition}
-            Context value: 
           { 
             hitserValues.map((hitser, index) => <HitserType key={index} index={index} hitser={hitser} />)
           }
         </Text>
       </View>
-
-      <Spinner/>
 
     </View>
   );
@@ -29,13 +26,8 @@ export const SpinnerScreen = () => {
 
 
 const styles = {
-  codeHighlightContainer: `rounded-md px-1`,
-  getStartedContainer: `items-center mx-12 pt-5`,
-  getStartedText: `text-lg leading-6 text-center`,
-  helpContainer: `items-center mx-5 mt-4`,
-  helpLink: `py-4`,
-  helpLinkText: `text-center`,
-  homeScreenFilename: `my-2`,
+  spinnerContainer: `flex-1 items-center justify-center mx-12 pt-5 h-full`,
+  histersContainer: 'flex items-center',
 };
 
 
