@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View,  StyleSheet  } from 'react-native';
-
+import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
 import { hitserContext } from '@/store/HisterContext';
 import Animated, {
@@ -22,7 +22,7 @@ export const Spinner = () => {
 
 
     const panGesture = Gesture.Pan()
-      .onStart((e) => setSpinnerSpun(false))
+      .onStart((e) => scheduleOnRN(setSpinnerSpun, false))
       .onUpdate((e) => {
         velocity.value = e.velocityX;
         angle.value = e.translationX;
@@ -30,11 +30,9 @@ export const Spinner = () => {
       .onEnd((e) => { 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
         let finalAngle = velocity.value % 360;
-        setSpinnerPosition(finalAngle);
-
-        setTimeout(() => {
-          setSpinnerSpun(true);
-        }, velocity.value + 500)
+         scheduleOnRN(setSpinnerPosition, finalAngle);
+         scheduleOnRN(updateSpinnerSpun, setSpinnerSpun, true, velocity);
+    
       })
 
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
@@ -56,3 +54,9 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
 });
+
+function updateSpinnerSpun(setSpinnerSpun, spunState, velocity) {
+      setTimeout(() => {
+          setSpinnerSpun(true);
+        }, velocity.value + 500)
+}
