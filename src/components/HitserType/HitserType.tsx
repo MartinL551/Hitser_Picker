@@ -7,14 +7,16 @@ import { HitserPopup } from '../HitserPopup/HitserPopup';
 export const HitserType = ({hitser, index}) => {
   const { hitserValues, setHitserValues, spinnerPosition, spinnerSpun} = React.useContext(hitserContext);
 
+
+
   if(isSelectedHister(spinnerPosition, hitserValues, index,) && spinnerSpun) {
     return (
-        <HitserPopup title={hitser.name} message={hitser.message} /> 
+        <HitserPopup style={getCssPositionForHister(hitserValues, 300, index)} title={hitser.name} message={hitser.message} /> 
     );
   }
 
   return (
-    <View>
+    <View style={getCssPositionForHister(hitserValues, 200, index)}>
         <Text>
             <Button onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)} title={hitser.name + hitser.active} />
         </Text>    
@@ -46,6 +48,34 @@ function isSelectedHister(spinnerPosition, histerValues, index) {
     return false;
 }
 
+function getAbsouluteAngleOfHister(histerValues, index) {
+    let activeAngleDeg = 360/histerValues.length;
+    let currentAngleDeg = activeAngleDeg * (index + 1);
+
+    return currentAngleDeg;
+}
+
+function convertAngleToXY(histerValues, radius, index)
+{
+  let angle = getAbsouluteAngleOfHister(histerValues, index);
+  let x = radius * Math.cos(Math.PI * 2 * angle / 360);
+  let y = radius * Math.sin(Math.PI * 2 * angle / 360);
+
+  return {x,y};
+}
+
+function getCssPositionForHister(histerValues, radius, index){
+  let {x,y} = convertAngleToXY(histerValues, radius, index);
+
+  x = Math.round(x);
+  y = Math.round(y);
+
+  return {
+    top: `${y}px`,
+    right: `${x}px`
+  }
+}
+
 function isAngleInRange(angle, max, min){
   angle %= 360
   max %= 360
@@ -57,3 +87,5 @@ function isAngleInRange(angle, max, min){
     return angle >= min || angle <= max;
   }
 } 
+
+

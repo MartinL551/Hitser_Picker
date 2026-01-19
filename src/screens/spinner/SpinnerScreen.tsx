@@ -9,13 +9,14 @@ export const SpinnerScreen = () => {
 
   return (
     <View className={styles.spinnerContainer}>
-      <Spinner/>
+    
       <View className={styles.histersContainer}>
-        <Text>
-          { 
-            hitserValues.map((hitser, index) => <HitserType key={index} index={index} hitser={hitser} />)
-          }
-        </Text>
+        <Spinner/>
+      
+        { 
+          hitserValues.map((hitser, index) => <HitserType key={index} index={index} hitser={hitser} />)
+        }
+      
       </View>
 
     </View>
@@ -26,8 +27,8 @@ export const SpinnerScreen = () => {
 
 
 const styles = {
-  spinnerContainer: `flex-1 items-center justify-center mx-12 pt-5 h-full`,
-  histersContainer: 'flex items-center',
+  spinnerContainer: `flex-1 items-center justify-center mx-12 pt-5 h-full `,
+  histersContainer: 'flex items-center relative aspect-square w-full',
 };
 
 
