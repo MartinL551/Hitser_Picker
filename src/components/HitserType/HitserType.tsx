@@ -35,7 +35,7 @@ function hideOnPress(hitser, hitserIndex, currentValues, setHitserValues) {
 function isSelectedHister(spinnerPosition, histerValues, index) {
     let activeHisterValues = histerValues.filter((hister) => hister.active === true);
     let activeAngleDeg = 360/activeHisterValues.length;
-    let currentAngleDeg = activeAngleDeg * (index + 1);
+    let currentAngleDeg = activeAngleDeg * (index);
     let minAngle = currentAngleDeg - (activeAngleDeg/2);
     let maxAngle = currentAngleDeg + (activeAngleDeg/2);
 
@@ -58,8 +58,10 @@ function getAbsouluteAngleOfHister(histerValues, index) {
 function convertAngleToXY(histerValues, radius, index)
 {
   let angle = getAbsouluteAngleOfHister(histerValues, index);
-  let x = radius * Math.cos(Math.PI * 2 * angle / 360);
-  let y = radius * Math.sin(Math.PI * 2 * angle / 360);
+  let x = radius * Math.cos(angle * (Math.PI/180));
+  let y = radius * Math.sin(angle * (Math.PI/180));
+
+  console.log('index', index, 'render angle', angle, 'convert x', x, 'convert y', y);
 
   return {x,y};
 }

@@ -22,6 +22,13 @@ const initialHisterState = [
         type: 'celebrations',
         message: 'Celebrations are here',
         active: true,
+    },
+    {
+        icon: 'disco',
+        name: 'Disco',
+        type: 'disco',
+        message: 'Disco Time',
+        active: true,
     }
 ]
 

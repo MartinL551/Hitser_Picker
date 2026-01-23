@@ -28,7 +28,7 @@ export const SpinnerScreen = () => {
 
 const styles = {
   spinnerContainer: `flex-1 items-center justify-center mx-12 pt-5 h-full `,
-  histersContainer: 'flex items-center relative aspect-square w-full',
+  histersContainer: 'flex items-center justify-center relative aspect-square w-full h-full',
 };
 
 
