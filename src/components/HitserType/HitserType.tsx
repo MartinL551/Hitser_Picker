@@ -1,6 +1,6 @@
 import { hitserContext } from '@/store/HisterContext';
 import React from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { HitserPopup } from '../HitserPopup/HitserPopup';
 
 
@@ -11,15 +11,15 @@ export const HitserType = ({hitser, index}) => {
 
   if(isSelectedHister(spinnerPosition, hitserValues, index,) && spinnerSpun) {
     return (
-        <HitserPopup style={getCssPositionForHister(hitserValues, 300, index)} title={hitser.name} message={hitser.message} /> 
+        <HitserPopup title={hitser.name} message={hitser.message} /> 
     );
   }
 
   return (
-    <View style={getCssPositionForHister(hitserValues, 200, index)}>
-        <Text>
-            <Button onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)} title={hitser.name + hitser.active} />
-        </Text>    
+    <View className={styles.histerType}>
+        <TouchableOpacity onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)}> 
+            <Image source={require('./icons/guitar.png')}  resizeMode={'cover'} style={{width: 25, height: 50}}/>
+        </TouchableOpacity>   
     </View>
   );
 };
@@ -73,8 +73,10 @@ function getCssPositionForHister(histerValues, radius, index){
   y = Math.round(y);
 
   return {
-    top: `${y}px`,
-    right: `${x}px`
+    position: 'absolute',
+    bottom: `${y}px`,
+    left: `${x}px`,
+    transform:'translate(-50%,-50%)'
   }
 }
 
@@ -89,5 +91,11 @@ function isAngleInRange(angle, max, min){
     return angle >= min || angle <= max;
   }
 } 
+
+
+const styles = {
+  histerType: `py-2 px-3`,
+};
+
 
 

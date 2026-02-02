@@ -51,12 +51,9 @@ const styles = StyleSheet.create({
     width: 30,
     backgroundColor: '#b58df1',
     borderRadius: 20,
-    marginBottom: 30,
-    position: 'absolute',
     borderTopWidth: 2,
     borderColor: 'red',
     borderStyle: 'solid',
-
   },
 });
 
