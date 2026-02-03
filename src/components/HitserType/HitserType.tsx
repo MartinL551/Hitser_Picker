@@ -18,7 +18,7 @@ export const HitserType = ({hitser, index}) => {
   return (
     <View className={styles.histerType}>
         <TouchableOpacity onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)}> 
-            <Image source={require('./icons/guitar.png')}  resizeMode={'cover'} style={{width: 25, height: 50}}/>
+            <Image source={hitser.icon}  resizeMode={'cover'} style={{width: 25, height: 50}}/>
         </TouchableOpacity>   
     </View>
   );
