@@ -7,18 +7,11 @@ import { HitserPopup } from '../HitserPopup/HitserPopup';
 export const HitserType = ({hitser, index}) => {
   const { hitserValues, setHitserValues, spinnerPosition, spinnerSpun} = React.useContext(hitserContext);
 
-
-
-  if(isSelectedHister(spinnerPosition, hitserValues, index,) && spinnerSpun) {
-    return (
-        <HitserPopup title={hitser.name} message={hitser.message} /> 
-    );
-  }
-
   return (
-    <View className={styles.histerType}>
-        <TouchableOpacity onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)}> 
-            <Image source={hitser.icon}  resizeMode={'cover'} style={{width: 25, height: 50}}/>
+    <View className={styles.histerTypeContainer}>
+       <Text className={styles.histerTitle}>{hitser.name}</Text>
+        <TouchableOpacity className={hitser.active ? styles.histerTypeActive : styles.histerTypeInactive } onPress={() => hideOnPress(hitser, index, hitserValues, setHitserValues)}  style={{width: 25, height: 50}}> 
+            <Image source={hitser.icon}  resizeMode={'cover'} style={{width: 20, height: 40}}/>
         </TouchableOpacity>   
     </View>
   );
@@ -94,7 +87,10 @@ function isAngleInRange(angle, max, min){
 
 
 const styles = {
-  histerType: `py-2 px-3`,
+  histerTypeActive: `flex flex-row items-center justify-center  py-2 px-3 mx-2 my-3 border-2 border-green-500 rounded-[10] bg-indigo-500`,
+  histerTypeInactive: `flex flex-row items-center justify-center px-3 mx-2 my-3 border-2 border-red-500 rounded-[10] bg-indigo-500`,
+  histerTypeContainer: 'flex items-center justify-center basis-1/4',
+  histerTitle: 'text-center text-xs bg-slate-500 font-semibold w-full'
 };
 
 

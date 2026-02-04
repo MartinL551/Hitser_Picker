@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+  --color-deckgrey: 49 49 49; /* use RGB channels, not hex */
+}

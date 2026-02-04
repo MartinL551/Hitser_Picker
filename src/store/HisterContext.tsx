@@ -29,7 +29,29 @@ const initialHisterState = [
         type: 'disco',
         message: 'Disco Time',
         active: true,
+    },
+    {
+        icon: require(`../../assets/icons/guitar.png`),
+        name: 'Disco',
+        type: 'disco',
+        message: 'Disco Time',
+        active: true,
+    },
+    {
+        icon: require(`../../assets/icons/guitar.png`),
+        name: 'Disco',
+        type: 'disco',
+        message: 'Disco Time',
+        active: true,
+    },
+    {
+        icon: require(`../../assets/icons/guitar.png`),
+        name: 'Disco',
+        type: 'disco',
+        message: 'Disco Time',
+        active: true,
     }
+    
 ]
 
 const initialSpinnerPosition = 0;

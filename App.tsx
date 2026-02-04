@@ -11,9 +11,16 @@ import {
 export default function App() {
   return (
     <GestureHandlerRootView>
-      <HitserProvider>
+      <HitserProvider >
         <SpinnerScreen />
       </HitserProvider>
     </GestureHandlerRootView>
   );
 }
+
+
+
+
+const styles = {
+  appContainer: `bg-purple`,
+};

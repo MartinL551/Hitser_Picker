@@ -4,7 +4,11 @@ module.exports = {
   darkMode: "class",
   presets: [require('nativewind/preset')],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        deckgrey: 'rgb(var(--color-deckgrey) / <alpha-value>)',
+      },
+    },
   },
   plugins: [],
 };

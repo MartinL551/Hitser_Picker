@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View,  StyleSheet  } from 'react-native';
+import { Text, View,  StyleSheet, Image  } from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
 import { hitserContext } from '@/store/HisterContext';
@@ -39,23 +39,14 @@ export const Spinner = () => {
 
   return (
     <GestureDetector gesture={panGesture}>
-      <Animated.View style={[styles.box, animatedStyle]}>
+      <Animated.View style={[animatedStyle]}>
+         <Image source={require(`../../../assets/icons/record.png`)}  resizeMode={'cover'} style={{width: 250, height: 250}}/>
       </ Animated.View>
     </GestureDetector> 
   );
 };
 
-const styles = StyleSheet.create({
-  box: {
-    height: 120,
-    width: 30,
-    backgroundColor: '#b58df1',
-    borderRadius: 20,
-    borderTopWidth: 2,
-    borderColor: 'red',
-    borderStyle: 'solid',
-  },
-});
+
 
 function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, velocity) {
       setTimeout(() => {
