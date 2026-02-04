@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         deckgrey: 'rgb(var(--color-deckgrey) / <alpha-value>)',
+        deckwood: 'rgb(var(--color-deckwood) / <alpha-value>)',
       },
     },
   },

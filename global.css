@@ -5,4 +5,5 @@
 
 :root {
   --color-deckgrey: 49 49 49; /* use RGB channels, not hex */
+  --color-deckwood: 153 113 82;
 }
