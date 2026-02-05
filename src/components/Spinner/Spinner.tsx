@@ -31,8 +31,7 @@ export const Spinner = () => {
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
         let finalAngle = velocity.value % 360;
          scheduleOnRN(setSpinnerPosition, finalAngle);
-         scheduleOnRN(updateSpinnerSpunAfterDuration, setSpinnerSpun, true, velocity);
-    
+         scheduleOnRN(updateSpinnerSpunAfterDuration, setSpinnerSpun, true, velocity.value);
       })
 
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
@@ -48,8 +47,9 @@ export const Spinner = () => {
 
 
 
-function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, velocity) {
+function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, delay) {
       setTimeout(() => {
           setSpinnerSpun(spunState);
-        }, velocity.value + 500)
+          updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000);
+        }, delay + 100)
 }

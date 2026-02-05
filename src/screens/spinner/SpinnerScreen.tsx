@@ -3,6 +3,7 @@ import React from 'react';
 import { Text, View, Button } from 'react-native';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { HitserType } from '@/components/HitserType/HitserType';
+import { HitserPopup } from '@/components/HitserPopup/HitserPopup';
 
 export const SpinnerScreen = () => {
   const { hitserValues, setHitserValues, spinnerPosition } = React.useContext(hitserContext);
@@ -16,6 +17,11 @@ export const SpinnerScreen = () => {
       <View className={styles.histersContainer}>
         { 
           hitserValues.map((hitser, index) => <HitserType key={index} index={index} hitser={hitser} />)
+        }
+      </View>
+      <View className=''>
+        { 
+          hitserValues.map((hitser, index) => <HitserPopup key={index} index={index} hitser={hitser} />)
         }
       </View>
     </View>
