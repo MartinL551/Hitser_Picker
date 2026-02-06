@@ -1,23 +1,25 @@
-import React from 'react';
-import { Text, View, Button } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Modal, Image } from 'react-native';
 import { hitserContext } from '@/store/HisterContext';
 
 
 export const HitserPopup = ({hitser, index}) => {
   const { hitserValues, spinnerPosition, spinnerSpun } = React.useContext(hitserContext);
+  let show = spinnerSpun && isSelectedHister(spinnerPosition, hitserValues, index);
 
-  if(spinnerSpun && isSelectedHister(spinnerPosition, hitserValues, index)) {
-    return (
-      <View>
+  return (
+    <Modal animationType="slide" transparent={true}  visible={show} >
+      <View className={styles.histerTypePopup}>
+        <Image source={hitser.icon}  resizeMode={'cover'} style={{width: 50, height: 150}}/>
         <Text>
           { hitser.name }
+        </Text>
+        <Text>
           { hitser.message }
         </Text>
       </View>
-    );
-  }
-
-  return;
+    </Modal>
+  );
 };
 
 function isSelectedHister(spinnerPosition, histerValues, index) {
@@ -47,3 +49,7 @@ function isAngleInRange(angle, max, min){
     return angle >= min || angle <= max;
   }
 } 
+
+const styles = {
+  histerTypePopup: `flex-1 items-center justify-center bg-blue-500 border-4 border-purple-500 mx-12 my-16`,
+};
