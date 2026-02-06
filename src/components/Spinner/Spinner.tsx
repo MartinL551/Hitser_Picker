@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View,  StyleSheet, Image  } from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
@@ -15,23 +15,25 @@ import Animated, {
 
 export const Spinner = () => {
 
-
     const angle = useSharedValue(0);
     const velocity = useSharedValue(0);
-    const { spinnerPosition, setSpinnerPosition, setSpinnerSpun } = React.useContext(hitserContext); 
+    const [animationRunning, setAnimationRunning] = useState(false);
 
-
+    const { spinnerSpun, spinnerPosition, setSpinnerPosition, setSpinnerSpun } = React.useContext(hitserContext); 
     const panGesture = Gesture.Pan()
-      .onStart((e) => scheduleOnRN(setSpinnerSpun, false))
       .onUpdate((e) => {
         velocity.value = e.velocityX;
         angle.value = e.translationX;
       })
-      .onEnd((e) => { 
+      .onFinalize((e) => { 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)});
         let finalAngle = velocity.value % 360;
-         scheduleOnRN(setSpinnerPosition, finalAngle);
-         scheduleOnRN(updateSpinnerSpunAfterDuration, setSpinnerSpun, true, velocity.value);
+        if(!animationRunning) {
+          scheduleOnRN(setSpinnerPosition, finalAngle);
+          scheduleOnRN(setAnimationRunning, true);
+          scheduleOnRN(updateSpinnerSpunAfterDuration, setSpinnerSpun, true, velocity.value);
+          scheduleOnRN(updateAnimationFlagAfterDuration, setAnimationRunning, false, velocity.value);
+        } 
       })
 
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
@@ -47,9 +49,15 @@ export const Spinner = () => {
 
 
 
-function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, delay) {
+function updateSpinnerSpunAfterDuration(setSpinnerSpun, flag, delay) {
       setTimeout(() => {
-          setSpinnerSpun(spunState);
+          setSpinnerSpun(flag);
           updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000);
-        }, delay + 100)
+      }, delay + 100)
+}
+
+function updateAnimationFlagAfterDuration(setAnimationRunning, flag, delay) {
+      setTimeout(() => {
+          setAnimationRunning(flag);
+      }, delay)
 }

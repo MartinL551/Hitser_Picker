@@ -5,7 +5,7 @@ import { hitserContext } from '@/store/HisterContext';
 
 export const HitserPopup = ({hitser, index}) => {
   const { hitserValues, spinnerPosition, spinnerSpun } = React.useContext(hitserContext);
-  let show = spinnerSpun && isSelectedHister(spinnerPosition, hitserValues, index);
+  let show = spinnerSpun && isSelectedHister(spinnerPosition, hitserValues, index, hitser);
 
   return (
     <Modal animationType="slide" transparent={true}  visible={show} >
@@ -22,16 +22,17 @@ export const HitserPopup = ({hitser, index}) => {
   );
 };
 
-function isSelectedHister(spinnerPosition, histerValues, index) {
+function isSelectedHister(spinnerPosition, histerValues, index, hitser) {
     let activeHisterValues = histerValues.filter((hister) => hister.active === true);
     let activeAngleDeg = 360/activeHisterValues.length;
     let currentAngleDeg = activeAngleDeg * (index);
     let minAngle = currentAngleDeg - (activeAngleDeg/2);
     let maxAngle = currentAngleDeg + (activeAngleDeg/2);
 
-    console.log('index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
 
-    if (isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
+    if (spinnerPosition && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
+        console.log('name', hitser.name, 'index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
+        console.log(spinnerPosition, 'hitAngle');
         return true;
     }
 
@@ -49,6 +50,13 @@ function isAngleInRange(angle, max, min){
     return angle >= min || angle <= max;
   }
 } 
+
+
+function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, delay) {
+      setTimeout(() => {
+          updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000);
+      }, delay + 100)
+}
 
 const styles = {
   histerTypePopup: `flex-1 items-center justify-center bg-blue-500 border-4 border-purple-500 mx-12 my-16`,
