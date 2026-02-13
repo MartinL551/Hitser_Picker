@@ -23,9 +23,13 @@ export const Spinner = () => {
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
         velocity.value = e.velocityX;
-        angle.value = e.translationX;
+        angle.value = e.translationX * (-1);
       })
       .onFinalize((e) => { 
+        if(velocity.value < 300) {
+          return;
+        }
+        
         let finalAngle = velocity.value % 360;
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)}, (complete) => {
           if(complete){
