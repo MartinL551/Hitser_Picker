@@ -51,6 +51,7 @@ export const Spinner = () => {
 };
 
 function updateSpinnerSpun(setSpinnerPosition, setSpinnerSpun, flag, finalAngle) {
+  console.log('setting Spinner Values', flag, finalAngle);
   setSpinnerPosition(finalAngle);
   setSpinnerSpun(flag);
 }

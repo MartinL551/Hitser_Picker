@@ -32,9 +32,9 @@ export const SpinnerScreen = () => {
 
 
 const styles = {
-  screenContainer: `flex-1 items-center justify-center px-12 pt-5 bg-purple-500`,
-  histersContainer: 'flex-row flex-wrap px-2 py-2 bg-deckgrey basis-1/4 w-full',
-  spinnerContainer: 'flex1 items-center justify-center py-[100px] border-4 border-deckgrey bg-deckwood w-full',
+  screenContainer: `flex-1 items-center justify-center px-8 pt-5 bg-purple-500`,
+  histersContainer: 'flex-row flex-wrap px-2 py-2 bg-deckgrey w-full',
+  spinnerContainer: 'flex1 items-center justify-center py-[50px] border-4 border-deckgrey bg-deckwood w-full',
 };
 
 

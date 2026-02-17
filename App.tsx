@@ -6,15 +6,18 @@ import './global.css';
 import {
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
+import { StrictMode } from 'react';
 
 
 export default function App() {
   return (
-    <GestureHandlerRootView>
-      <HitserProvider >
-        <SpinnerScreen />
-      </HitserProvider>
-    </GestureHandlerRootView>
+    <StrictMode>
+      <GestureHandlerRootView>
+        <HitserProvider >
+          <SpinnerScreen />
+        </HitserProvider>
+      </GestureHandlerRootView>
+    </StrictMode>
   );
 }
 

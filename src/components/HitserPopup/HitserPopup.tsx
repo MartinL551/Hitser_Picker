@@ -10,7 +10,7 @@ export const HitserPopup = ({hitser, index}) => {
   return (
     <Modal animationType="slide" transparent={true} visible={show}  onShow={(e) => {  updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000) }}>
       <View className={styles.histerTypePopup}>
-        <Image source={hitser.icon}  resizeMode={'cover'} style={{width: 50, height: 150}}/>
+        <Image source={hitser.icon}  resizeMode={'contain'} style={{width: 150, height: 150}}/>
         <Text>
           { hitser.name }
         </Text>
@@ -28,10 +28,10 @@ function isSelectedHister(spinnerPosition, histerValues, index, hitser) {
     let currentAngleDeg = activeAngleDeg * (index);
     let minAngle = currentAngleDeg - (activeAngleDeg/2);
     let maxAngle = currentAngleDeg + (activeAngleDeg/2);
+      console.log('name', hitser.name, 'index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
 
     if (spinnerPosition && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
-        console.log('name', hitser.name, 'index',index, 'minAngle', minAngle, 'maxAngle', maxAngle);
-        console.log(spinnerPosition, 'hitAngle');
+        console.log(spinnerPosition, 'hitAngle', hitser.name, 'hitName');
         return true;
     }
 
@@ -58,5 +58,5 @@ function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, delay) {
 
 
 const styles = {
-  histerTypePopup: `flex-1 items-center justify-center bg-blue-500 border-4 border-purple-500 mx-12 my-16`,
+  histerTypePopup: `flex-1 items-center justify-center bg-blue-500 border-4 border-purple-500`,
 };
