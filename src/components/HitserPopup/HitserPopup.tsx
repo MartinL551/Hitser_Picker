@@ -23,20 +23,13 @@ export const HitserPopup = ({hitser, index}) => {
 };
 
 function isSelectedHister(spinnerPosition, histerValues, index, hitser) {
-
     if(!hitser.active){
       return false;
     }
 
-    let activeHisterValues = histerValues.filter((hister) => hister.active === true);
-    let currentActiveIndex = activeHisterValues.findIndex(activeHitser => activeHitser.type === hitser.type);
-    let {minAngle, maxAngle} = getSegmentsAngle(currentActiveIndex, activeHisterValues.length);
-
-    console.log('name', hitser.name, 'index', currentActiveIndex, 'minAngle', minAngle, 'maxAngle', maxAngle);
-
-    // if(spinnerPosition && activeHisterValues.length === 1 && hitser.active) {
-    //   return true;
-    // }
+    const activeHisterValues = histerValues.filter((hister) => hister.active === true);
+    const currentActiveIndex = activeHisterValues.findIndex(activeHitser => activeHitser.type === hitser.type);
+    const {minAngle, maxAngle} = getSegmentsAngle(currentActiveIndex, activeHisterValues.length);
 
     if (spinnerPosition && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
         console.log(spinnerPosition, 'hitAngle', hitser.name, 'hitName');
@@ -59,9 +52,9 @@ function isAngleInRange(angle, max, min){
 }
 
 function getSegmentsAngle(index, totalSegments) {
-  let degreesPerSegment = 360/totalSegments;
-  let minAngle = index * degreesPerSegment;
-  let maxAngle = (index + 1) * degreesPerSegment;
+  const degreesPerSegment = 360/totalSegments;
+  const minAngle = index * degreesPerSegment;
+  const maxAngle = (index + 1) * degreesPerSegment;
 
   return {
     minAngle: minAngle,
@@ -70,9 +63,9 @@ function getSegmentsAngle(index, totalSegments) {
 }
 
 function updateSpinnerSpunAfterDuration(setSpinnerSpun, spunState, delay) {
-      setTimeout(() => {
-        setSpinnerSpun(spunState);
-      }, delay)
+    setTimeout(() => {
+      setSpinnerSpun(spunState);
+    }, delay)
 }
 
 
