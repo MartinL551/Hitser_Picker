@@ -4,9 +4,13 @@ import { Text, View, Button } from 'react-native';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { HitserType } from '@/components/HitserType/HitserType';
 import { HitserPopup } from '@/components/HitserPopup/HitserPopup';
+import { HitserItemInterface } from '@/types/HitserItemInterface';
+import { HitserItemsInterface } from '@/types/HitserItemsInterface';
+
+
 
 export const SpinnerScreen = () => {
-  const { hitserValues, setHitserValues, spinnerPosition } = React.useContext(hitserContext);
+  const { hitserValues, setHitserValues, spinnerPosition }= React.useContext(hitserContext);
 
   return (
     <View className={styles.screenContainer}>
@@ -16,12 +20,12 @@ export const SpinnerScreen = () => {
 
       <View className={styles.histersContainer}>
         { 
-          hitserValues.map((hitser, index) => <HitserType key={index} index={index} hitser={hitser} />)
+          hitserValues.map((hitser: HitserItemInterface, index: number) => <HitserType key={index} index={index} hitser={hitser} />)
         }
       </View>
       <View className=''>
         { 
-          hitserValues.map((hitser, index) => <HitserPopup key={index} index={index} hitser={hitser} />)
+          hitserValues.map((hitser: HitserItemInterface, index: number) => <HitserPopup key={index} index={index} hitser={hitser} />)
         }
       </View>
     </View>

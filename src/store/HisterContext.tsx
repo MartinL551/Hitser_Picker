@@ -1,6 +1,6 @@
 import * as React from "react";
-import { HitserItemsInterface } from "@/types/HitserItemsType";
-import { HitserContextPropsInterface } from "@/types/HisterContexPropsInterface"
+import { HitserItemsInterface } from "@/types/HitserItemsInterface";
+import { HitserContextPropsInterface } from "@/types/HitserContextPropsInterface"
 
 const initialHisterState : HitserItemsInterface = [
     {
@@ -63,13 +63,13 @@ const initialHisterState : HitserItemsInterface = [
 
 const initialSpinnerPosition : number = 0;
 
-export const hitserContext = React.createContext();
+export const hitserContext = React.createContext<HitserItemsInterface | null>(null);
 
 export const HitserProvider = ({ children }: HitserContextPropsInterface) => {
 
-    const [hitserValues, setHitserValues] = React.useState(initialHisterState);
-    const [spinnerPosition, setSpinnerPosition] = React.useState(initialSpinnerPosition);
-    const [spinnerSpun, setSpinnerSpun] = React.useState(false);
+    const [hitserValues, setHitserValues] = React.useState<HitserItemsInterface>(initialHisterState);
+    const [spinnerPosition, setSpinnerPosition] = React.useState<number>(initialSpinnerPosition);
+    const [spinnerSpun, setSpinnerSpun] = React.useState<boolean>(false);
 
     return (
       
