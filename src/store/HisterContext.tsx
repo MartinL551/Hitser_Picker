@@ -1,7 +1,8 @@
 import * as React from "react";
-import { HitserItemsType } from "@/types/HitserItemsType";
+import { HitserItemsInterface } from "@/types/HitserItemsType";
+import { HitserContextPropsInterface } from "@/types/HisterContexPropsInterface"
 
-const initialHisterState = [
+const initialHisterState : HitserItemsInterface = [
     {
         icon: require(`../../assets/icons/record.png`),
         name: 'Original',
@@ -60,13 +61,11 @@ const initialHisterState = [
     },    
 ]
 
-const initialSpinnerPosition = 0;
-
-
+const initialSpinnerPosition : number = 0;
 
 export const hitserContext = React.createContext();
 
-export const HitserProvider = ({ children }) => {
+export const HitserProvider = ({ children }: HitserContextPropsInterface) => {
 
     const [hitserValues, setHitserValues] = React.useState(initialHisterState);
     const [spinnerPosition, setSpinnerPosition] = React.useState(initialSpinnerPosition);

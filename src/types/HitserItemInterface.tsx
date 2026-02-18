@@ -1,5 +1,7 @@
 export interface HitserItemInterface {
-    icon: string,
+    icon: NodeJS.Require,
     name: string,
     type: string,
+    message: string,
+    active: boolean,
 }
