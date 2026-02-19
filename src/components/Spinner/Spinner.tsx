@@ -18,7 +18,7 @@ export const Spinner = () => {
     const angle = useSharedValue(0);
     const velocity = useSharedValue(0);
 
-    const { spinnerSpun, spinnerPosition, setSpinnerPosition, setSpinnerSpun } = React.useContext(hitserContext); 
+    const { spinnerSpun, spinnerPosition, setSpinnerPosition, setSpinnerSpun, hitserValues } = React.useContext(hitserContext); 
   
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
@@ -31,8 +31,9 @@ export const Spinner = () => {
         }
         
         let finalAngle = velocity.value % 360;
+        let hasActiveHitser = hitserValues.filter((hister) => hister.active === true).length > 0; 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)}, (complete) => {
-          if(complete){
+          if(complete && hasActiveHitser){
             scheduleOnRN(updateSpinnerSpun, setSpinnerPosition, setSpinnerSpun, true, finalAngle);
           }
         });
@@ -51,7 +52,6 @@ export const Spinner = () => {
 };
 
 function updateSpinnerSpun(setSpinnerPosition, setSpinnerSpun, flag, finalAngle) {
-  console.log('setting Spinner Values', flag, finalAngle);
   setSpinnerPosition(finalAngle);
   setSpinnerSpun(flag);
 }
