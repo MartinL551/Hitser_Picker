@@ -1,4 +1,5 @@
-import { DeckItemInterface } from "./DeckItemInterface";
+import type { DeckItemInterface } from "./DeckItemInterface";
+import type React from "react";
 
 export type DeckItemsInterface = DeckItemInterface[];
 

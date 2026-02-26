@@ -64,12 +64,6 @@ const initialEntiresState : DeckItemsInterface = [
 
 export const DecksContext = React.createContext<DeckItemsContextType | null>(null);
 
-export function useDecks() {
-  const ctx = React.useContext(DecksContext);
-  if (!ctx) throw new Error("useDecks must be used within DeckProvider");
-  return ctx;
-}
-
 export function DecksProvider( {children}: {children: React.ReactNode}) {
     const [entries, setEntries] = React.useState<DeckItemsInterface>(initialEntiresState);
 
@@ -77,3 +71,5 @@ export function DecksProvider( {children}: {children: React.ReactNode}) {
 
     return <DecksContext.Provider value={value}>{children}</DecksContext.Provider>;
 }
+
+
