@@ -1,24 +1,22 @@
-import React, { useState } from 'react';
-import { Text, View,  StyleSheet, Image  } from 'react-native';
-import { scheduleOnRN, getRuntimeKind } from 'react-native-worklets';
+import React from 'react';
+import { Image  } from 'react-native';
+import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
-import { hitserContext } from '@/store/HisterContext';
 import Animated, {
   useSharedValue,
   withTiming,
   useAnimatedStyle,
-  withRepeat,
-  cancelAnimation,
   Easing,
-  interpolate
 } from 'react-native-reanimated';
+import { useDecks, useSpinner } from '@/store/storeHooks';
 
 export const Spinner = () => {
 
     const angle = useSharedValue(0);
     const velocity = useSharedValue(0);
 
-    const { spinnerSpun, spinnerPosition, setSpinnerPosition, setSpinnerSpun, hitserValues } = React.useContext(hitserContext); 
+    const { setSpinnerPosition, setSpinnerSpun,} = useSpinner();
+    const { entries } = useDecks();
   
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
@@ -31,9 +29,9 @@ export const Spinner = () => {
         }
         
         let finalAngle = velocity.value % 360;
-        let hasActiveHitser = hitserValues.filter((hister) => hister.active === true).length > 0; 
+        let hasActivedeck = entries.filter((deck) => deck.active === true).length > 0; 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)}, (complete) => {
-          if(complete && hasActiveHitser){
+          if(complete && hasActivedeck){
             scheduleOnRN(updateSpinnerSpun, setSpinnerPosition, setSpinnerSpun, true, finalAngle);
           }
         });
@@ -51,7 +49,11 @@ export const Spinner = () => {
   );
 };
 
-function updateSpinnerSpun(setSpinnerPosition, setSpinnerSpun, flag, finalAngle) {
+function updateSpinnerSpun(
+  setSpinnerPosition: React.Dispatch<React.SetStateAction<number>>, 
+  setSpinnerSpun: React.Dispatch<React.SetStateAction<boolean>>, 
+  flag: boolean, 
+  finalAngle: number) {
   setSpinnerPosition(finalAngle);
   setSpinnerSpun(flag);
 }
