@@ -9,7 +9,7 @@ type Props = {
   index: number
 }
 
-export const deckType = ({deck, index} :Props) => {
+export const DeckType = ({deck, index} :Props) => {
   const { entries, setEntries } = useDecks();
 
   return (
