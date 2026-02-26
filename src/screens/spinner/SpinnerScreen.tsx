@@ -4,7 +4,7 @@ import { Spinner } from '@/components/Spinner/Spinner';
 import { DeckType } from '@/components/DeckType/DeckType';
 import { DeckPopup } from '@/components/DeckPopup/DeckPopup';
 import { DeckItemInterface } from '@/types/DeckItemInterface';
-import { useDecks } from '@/store/DecksContext';
+import { useDecks } from '@/hooks/storeHooks';
 
 
 
