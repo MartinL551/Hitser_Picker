@@ -18,7 +18,7 @@ export const SpinnerScreen = () => {
       </View>
 
       <View className={styles.decksTitleContainer}>
-        <Text className={styles.decksTitle}> Pick the decks below </Text>
+        <Text className={styles.decksTitle}> Selected Decks </Text>
       </View>
       <View className={styles.decksContainer}>
         { 

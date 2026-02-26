@@ -10,6 +10,18 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useDecks, useSpinner } from '@/hooks/storeHooks';
 
+type Point = {
+  x: number;
+  y: number;
+};
+
+type Velocity = {
+  vx: number;
+  vy: number;
+};
+
+const MIN_RADIUS_SQUARED = 0.000001;
+
 export const Spinner = () => {
 
     const angle = useSharedValue(0);
@@ -20,16 +32,23 @@ export const Spinner = () => {
   
     const panGesture = Gesture.Pan()
       .onUpdate((e) => {
-        velocity.value = e.velocityX;
-        angle.value = e.translationX * (-1);
+        const currentVel = {
+          vx: e.velocityX,
+          vy: e.velocityY,
+        }
+
+        const currentPoint = {
+          x: e.absoluteX, 
+          y: e.absoluteY,
+        }
       })
       .onFinalize((e) => { 
         if(velocity.value < 300) {
           return;
         }
         
-        let finalAngle = velocity.value % 360;
-        let hasActivedeck = entries.filter((deck) => deck.active === true).length > 0; 
+        const finalAngle = velocity.value % 360;
+        const hasActivedeck = entries.filter((deck) => deck.active === true).length > 0; 
         angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)}, (complete) => {
           if(complete && hasActivedeck){
             scheduleOnRN(updateSpinnerSpun, setSpinnerPosition, setSpinnerSpun, true, finalAngle);
@@ -43,7 +62,7 @@ export const Spinner = () => {
   return (
     <GestureDetector gesture={panGesture}>
       <Animated.View style={[animatedStyle]}>
-         <Image source={require(`../../../assets/icons/record.png`)}  resizeMode={'cover'} style={{width: 250, height: 250}}/>
+         <Image source={require(`../../../assets/icons/record.png`)}  resizeMode={'cover'} style={{width: 300, height: 300}}/>
       </ Animated.View>
     </GestureDetector> 
   );
@@ -57,5 +76,28 @@ function updateSpinnerSpun(
 ) {
   setSpinnerPosition(finalAngle);
   setSpinnerSpun(flag);
+}
+
+function getAngularVelocityFromPan(
+  position: Point,
+  velocity: Velocity,
+  center: Point,
+): number{
+  const radiusX = position.x - center.x;
+  const radiusY = position.y - center.y;
+
+  const radiusSquared = radiusX^2 + radiusY^2;
+
+  if(radiusSquared < MIN_RADIUS_SQUARED) {
+    return 0;
+  }
+
+  const tangentialVelocity = radiusX * velocity.vy - radiusY * velocity.vx;
+
+  const omegaRadians = tangentialVelocity / radiusSquared;
+
+  const omegaDegrees = omegaRadians * (180 / Math.PI);
+
+  return omegaDegrees;
 }
 
