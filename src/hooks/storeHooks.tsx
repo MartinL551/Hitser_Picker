@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DecksContext } from "./DecksContext";
-import { SpinnerContext } from "./SpinnerContext";
+import { DecksContext } from "../store/DecksContext";
+import { SpinnerContext } from "../store/SpinnerContext";
 import { SpinnerContextType } from '@/types/SpinnerContextType';
 import { DeckItemsContextType } from '@/types/DeckItemsType';
 

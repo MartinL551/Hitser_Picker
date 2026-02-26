@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, Modal, Image } from 'react-native';
-import { useSpinner, useDecks } from '@/store/storeHooks';
+import { useSpinner, useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
 

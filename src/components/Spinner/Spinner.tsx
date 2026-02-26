@@ -8,7 +8,7 @@ import Animated, {
   useAnimatedStyle,
   Easing,
 } from 'react-native-reanimated';
-import { useDecks, useSpinner } from '@/store/storeHooks';
+import { useDecks, useSpinner } from '@/hooks/storeHooks';
 
 export const Spinner = () => {
 

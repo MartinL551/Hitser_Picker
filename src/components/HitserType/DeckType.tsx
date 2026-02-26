@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, Image } from 'react-native';
-import { useDecks } from '@/store/storeHooks';
+import { useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
 
