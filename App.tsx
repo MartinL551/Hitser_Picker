@@ -20,10 +20,3 @@ export default function App() {
       </GestureHandlerRootView>
   );
 }
-
-
-
-
-const styles = {
-  appContainer: `bg-purple`,
-};

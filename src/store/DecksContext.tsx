@@ -9,7 +9,7 @@ const initialEntiresState : DeckItemsInterface = [
         name: 'Original',
         type: 'ORG',
         message: 'The Og',
-        active: true,
+        active: false,
     },
     {
         icon: require(`../../assets/icons/microphone.png`),

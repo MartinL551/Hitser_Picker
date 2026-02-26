@@ -9,7 +9,7 @@ export async function saveDeckState (entries: DeckItemsInterface){
     await AsyncStorage.setItem(DECK_KEY, JSON.stringify(payload));
 }
 
-export async function loadDeckState(): Promise<null | Array<{ type: string; active: boolean }>> {
+export async function loadDeckState(): Promise<null | { type: string; active: boolean }[]> {
     const rawData = await AsyncStorage.getItem(DECK_KEY);
 
     if(!rawData) {

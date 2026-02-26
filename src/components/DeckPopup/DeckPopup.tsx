@@ -21,15 +21,19 @@ export const DeckPopup = ({deck} :Props) => {
   let show = spinnerSpun && isSelecteddeck(spinnerPosition, entries, deck);
 
   return (
-    <Modal animationType="slide" transparent={true} visible={show}  onShow={(e) => {  updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000) }}>
-      <View className={styles.deckTypePopup}>
-        <Image source={deck.icon}  resizeMode={'contain'} style={{width: 150, height: 150}}/>
-        <Text>
-          { deck.name }
-        </Text>
-        <Text>
-          { deck.message }
-        </Text>
+    <Modal animationType="slide" transparent={true} visible={show} onShow={(e) => {  updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000) }}>
+      <View className={styles.modalContainer} >
+        <View className={styles.deckTypePopup}>
+          <View className={styles.popupIconContainer}>
+            <Image source={deck.icon} resizeMode={'contain'} style={{width: 150, height: 150}}/>
+          </View>
+          <Text className={styles.popupTitle}>
+            { deck.name }
+          </Text>
+          <Text className={styles.popupBlurb}>
+            { deck.message }
+          </Text>
+        </View>
       </View>
     </Modal>
   );
@@ -69,8 +73,6 @@ function isAngleInRange(
 ): boolean{
   angle %= 360
 
-  console.log('minCheck', min, 'maxCheck', max);
-
   if(min <= max) {
     return min <= angle && max >= angle;
   } else {
@@ -103,5 +105,9 @@ function updateSpinnerSpunAfterDuration(
 
 
 const styles = {
-  deckTypePopup: `flex-1 items-center justify-center bg-blue-500 border-4 border-purple-500`,
+  deckTypePopup: `items-center justify-center bg-blue-500 border-4 border-purple-500 m-auto p-4 rounded-[10] w-3/4 m-auto `,
+  modalContainer: 'flex1 h-full',
+  popupTitle: 'text-center text-3xl bg-slate-500 font-bold w-full font-bold my-3 rounded-[10] rotate-[10deg] px-3 py-1',
+  popupBlurb: 'text-center text-2xl text-bold my-3 text-m',
+  popupIconContainer: 'my-4 bg-amber-300 p-2 rounded-[100]'
 };

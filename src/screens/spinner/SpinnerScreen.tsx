@@ -22,7 +22,7 @@ export const SpinnerScreen = () => {
           entries.map((deck: DeckItemInterface, index: number) => <DeckType key={index} index={index} deck={deck} />)
         }
       </View>
-      <View className=''>
+      <View>
         { 
           entries.map((deck: DeckItemInterface, index: number) => <DeckPopup key={index} index={index} deck={deck} />)
         }

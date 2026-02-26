@@ -1,5 +1,5 @@
 {
-  "name": "Hitser_Picker",
+  "name": "Music_Game_Selector",
   "version": "1.0.0",
   "scripts": {
     "android": "expo run:android",

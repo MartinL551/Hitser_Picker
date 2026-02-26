@@ -53,7 +53,8 @@ function updateSpinnerSpun(
   setSpinnerPosition: React.Dispatch<React.SetStateAction<number>>, 
   setSpinnerSpun: React.Dispatch<React.SetStateAction<boolean>>, 
   flag: boolean, 
-  finalAngle: number) {
+  finalAngle: number
+) {
   setSpinnerPosition(finalAngle);
   setSpinnerSpun(flag);
 }

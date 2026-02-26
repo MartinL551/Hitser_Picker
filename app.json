@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Hitser_Picker",
-    "slug": "Hitser_Picker",
+    "name": "Music_Game_Selector",
+    "slug": "Music_Game_Selector",
     "version": "1.0.0",
 
     "web": {
@@ -33,7 +33,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.martin.hitser_picker",
+      "package": "com.martin.music_game_selector",
       "versionCode": 1
     }
   }
