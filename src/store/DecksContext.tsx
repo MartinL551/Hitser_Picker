@@ -1,8 +1,8 @@
-import * as React from "react";
-import { DeckItemInterface } from "@/types/DeckItemsType";
-import { HitserContextPropsInterface } from "@/types/HitserContextPropsInterface"
+import * as React from 'react';
+import { DeckItemsContextType, DeckItemInterface } from '@/types/DeckItemsType';
 
-const initialHisterState : DeckItemInterface = [
+
+const initialEntiresState : DeckItemInterface = [
     {
         icon: require(`../../assets/icons/record.png`),
         name: 'Original',
@@ -61,20 +61,19 @@ const initialHisterState : DeckItemInterface = [
     },    
 ]
 
-const initialSpinnerPosition : number = 0;
 
-export const hitserContext = React.createContext<DeckItemInterface | null>(null);
+export const DecksContext = React.createContext<DeckItemsContextType | null>(null);
 
-export const HitserProvider = ({ children }: HitserContextPropsInterface) => {
+export function useDecks() {
+  const ctx = React.useContext(DecksContext);
+  if (!ctx) throw new Error("useDecks must be used within DeckProvider");
+  return ctx;
+}
 
-    const [hitserValues, setHitserValues] = React.useState<DeckItemInterface>(initialHisterState);
-    const [spinnerPosition, setSpinnerPosition] = React.useState<number>(initialSpinnerPosition);
-    const [spinnerSpun, setSpinnerSpun] = React.useState<boolean>(false);
+export function DecksProvider( {children}: {children: React.ReactNode}) {
+    const [entries, setEntries] = React.useState<DeckItemInterface>(initialEntiresState);
 
-    return (
-      
-        <hitserContext.Provider value={{hitserValues, setHitserValues, spinnerPosition, setSpinnerPosition, spinnerSpun, setSpinnerSpun}}>
-            {children}
-        </hitserContext.Provider>
-    );
-}; 
+    const value = React.useMemo(() => ({ entries, setEntries }), [entries]);
+
+    return <DecksContext.Provider value={value}>{children}</DecksContext.Provider>;
+}

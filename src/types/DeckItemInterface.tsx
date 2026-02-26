@@ -1,4 +1,4 @@
-export interface HitserItemInterface {
+export interface DeckItemInterface {
     icon: NodeJS.Require,
     name: string,
     type: string,

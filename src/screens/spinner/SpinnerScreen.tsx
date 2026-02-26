@@ -4,8 +4,7 @@ import { Text, View, Button } from 'react-native';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { HitserType } from '@/components/HitserType/HitserType';
 import { HitserPopup } from '@/components/HitserPopup/HitserPopup';
-import { HitserItemInterface } from '@/types/HitserItemInterface';
-import { HitserItemsInterface } from '@/types/HitserItemsInterface';
+import { DeckItemInterface } from '@/types/DeckItemInterface';
 
 
 
@@ -20,12 +19,12 @@ export const SpinnerScreen = () => {
 
       <View className={styles.histersContainer}>
         { 
-          hitserValues.map((hitser: HitserItemInterface, index: number) => <HitserType key={index} index={index} hitser={hitser} />)
+          hitserValues.map((hitser: DeckItemInterface, index: number) => <HitserType key={index} index={index} hitser={hitser} />)
         }
       </View>
       <View className=''>
         { 
-          hitserValues.map((hitser: HitserItemInterface, index: number) => <HitserPopup key={index} index={index} hitser={hitser} />)
+          hitserValues.map((hitser: DeckItemInterface, index: number) => <HitserPopup key={index} index={index} hitser={hitser} />)
         }
       </View>
     </View>
