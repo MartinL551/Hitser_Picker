@@ -31,9 +31,6 @@ export const SpinnerScreen = () => {
   );
 };
 
-
-
-
 const styles = {
   screenContainer: `flex-1 items-center justify-center px-8 pt-5 bg-purple-500`,
   decksContainer: 'flex-row flex-wrap px-2 py-2 bg-deckgrey w-full',
