@@ -1,8 +1,8 @@
 import React from 'react';
 import { Text, View, Modal, Image } from 'react-native';
-import { useSpinner, useDecks } from '@/store/StoreHooks';
-import { DeckItemInterface } from '@/types/DeckItemInterface';
-import { DeckItemsInterface } from '@/types/DeckItemsType';
+import { useSpinner, useDecks } from '@/store/storeHooks';
+import type { DeckItemInterface } from '@/types/DeckItemInterface';
+import type { DeckItemsInterface } from '@/types/DeckItemsType';
 
 type SegmentAngles = {
   minAngle: number;
@@ -14,12 +14,11 @@ type Props = {
   index: number
 }
 
-
-export const DeckPopup = ({deck, index} : Props) => {
+export const DeckPopup = ({deck} :Props) => {
   const { entries } = useDecks();
   const { spinnerPosition, spinnerSpun, setSpinnerSpun} = useSpinner();
 
-  let show = spinnerSpun && isSelecteddeck(spinnerPosition, entries, index, deck);
+  let show = spinnerSpun && isSelecteddeck(spinnerPosition, entries, deck);
 
   return (
     <Modal animationType="slide" transparent={true} visible={show}  onShow={(e) => {  updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000) }}>
@@ -39,7 +38,6 @@ export const DeckPopup = ({deck, index} : Props) => {
 function isSelecteddeck(
   spinnerPosition: number, 
   deckValues: DeckItemsInterface, 
-  index: number, 
   deck:  DeckItemInterface
 ): boolean {
     if(!deck.active){
@@ -50,10 +48,14 @@ function isSelecteddeck(
     const currentActiveIndex = activeDeckValues.findIndex(
       activedeck => activedeck.type === deck.type
     );
+
+    if(activeDeckValues.length === 0) {
+      return false;
+    }
+
     const {minAngle, maxAngle} = getSegmentsAngle(currentActiveIndex, activeDeckValues.length);
 
-    if (spinnerPosition && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
-        console.log(spinnerPosition, 'hitAngle', deck.name, 'hitName');
+    if (spinnerPosition !== null && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
         return true;
     }
 

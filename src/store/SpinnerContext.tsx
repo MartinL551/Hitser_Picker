@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { SpinnerContextType } from '@/types/SpinnerContextType';
+import type { SpinnerContextType } from '@/types/SpinnerContextType';
 
 
 export const SpinnerContext = React.createContext<SpinnerContextType | null>(null);

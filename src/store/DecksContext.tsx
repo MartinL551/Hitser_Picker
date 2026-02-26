@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { DeckItemsContextType, DeckItemInterface } from '@/types/DeckItemsType';
+import type { DeckItemsContextType, DeckItemsInterface } from '@/types/DeckItemsType';
 
 
-const initialEntiresState : DeckItemInterface = [
+const initialEntiresState : DeckItemsInterface = [
     {
         icon: require(`../../assets/icons/record.png`),
         name: 'Original',
@@ -71,7 +71,7 @@ export function useDecks() {
 }
 
 export function DecksProvider( {children}: {children: React.ReactNode}) {
-    const [entries, setEntries] = React.useState<DeckItemInterface>(initialEntiresState);
+    const [entries, setEntries] = React.useState<DeckItemsInterface>(initialEntiresState);
 
     const value = React.useMemo(() => ({ entries, setEntries }), [entries]);
 
