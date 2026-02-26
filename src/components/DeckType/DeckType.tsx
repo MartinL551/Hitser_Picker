@@ -3,6 +3,7 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
+import { saveDeckState } from '@/store/PersistStore';
 
 type Props = {
   deck: DeckItemInterface,

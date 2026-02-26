@@ -1,5 +1,6 @@
 import * as React from 'react';
 import type { DeckItemsContextType, DeckItemsInterface } from '@/types/DeckItemsType';
+import { loadDeckState, saveDeckState } from './PersistStore';
 
 
 const initialEntiresState : DeckItemsInterface = [
@@ -67,9 +68,30 @@ export const DecksContext = React.createContext<DeckItemsContextType | null>(nul
 export function DecksProvider( {children}: {children: React.ReactNode}) {
     const [entries, setEntries] = React.useState<DeckItemsInterface>(initialEntiresState);
 
+    React.useEffect(() => {
+        (async () => {
+            const saved = await loadDeckState();
+            if (!saved) {
+                return;
+            }
+
+            setEntries(prev =>
+                prev.map(deck => {
+                    const found = saved.find(savedDeck => savedDeck.type === deck.type);
+                    return found ? { ...deck, active: found.active } : deck;
+                })
+            );
+        })();
+    }, []);
+
+    React.useEffect(() => {
+        saveDeckState(entries);
+    }, [entries]);
+
     const value = React.useMemo(() => ({ entries, setEntries }), [entries]);
 
     return <DecksContext.Provider value={value}>{children}</DecksContext.Provider>;
 }
+
 
 
