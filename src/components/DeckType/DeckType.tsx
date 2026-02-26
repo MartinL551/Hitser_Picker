@@ -3,7 +3,6 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
-import { saveDeckState } from '@/store/PersistStore';
 
 type Props = {
   deck: DeckItemInterface,
@@ -38,8 +37,8 @@ function activeOnPress(
 const styles = {
   histerTypeActive: `flex flex-row items-center justify-center py-2 px-3 mx-2 my-3 border-2 border-green-500 rounded-[10] bg-lime-500`,
   histerTypeInactive: `flex flex-row items-center justify-center px-3 mx-2 my-3 border-2 border-red-500 rounded-[10] bg-orange-500`,
-  histerTypeContainer: 'flex items-center justify-center basis-1/4 p-1',
-  histerTitle: 'text-center text-xs bg-slate-500 w-full font-bold'
+  histerTypeContainer: 'flex items-center justify-end basis-1/4 p-1',
+  histerTitle: 'text-center text-xs bg-label w-full font-bold'
 };
 
 

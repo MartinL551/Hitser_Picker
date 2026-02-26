@@ -8,6 +8,9 @@ module.exports = {
       colors: {
         deckgrey: 'rgb(var(--color-deckgrey) / <alpha-value>)',
         deckwood: 'rgb(var(--color-deckwood) / <alpha-value>)',
+        onairred: 'rgb(var(--color-onairred) / <alpha-value>)',
+        label: 'rgb(var(--color-label) / <alpha-value>)',
+        deckgold: 'rgb(var(--color-deckgold) / <alpha-value>)',
       },
     },
   },

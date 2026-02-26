@@ -3,6 +3,14 @@ import { Text, View, Modal, Image } from 'react-native';
 import { useSpinner, useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
+import Animated, {
+  useSharedValue,
+  withSpring,
+  withTiming,
+  withRepeat,
+  useAnimatedStyle,
+  Easing,
+} from 'react-native-reanimated';
 
 type SegmentAngles = {
   minAngle: number;
@@ -19,19 +27,41 @@ export const DeckPopup = ({deck} :Props) => {
   const { spinnerPosition, spinnerSpun, setSpinnerSpun} = useSpinner();
 
   let show = spinnerSpun && isSelecteddeck(spinnerPosition, entries, deck);
+  const duration = 1000;
+  const easing = Easing.bezier(0.66, -1, 0.27, 1.98);
+  const svIcon = useSharedValue<number>(0.05);
+  const svTitle = useSharedValue<number>(-0.03);
+
+  React.useEffect(() => {
+    svIcon.value = withRepeat(withTiming(-0.05, { duration, easing },), -1, true);
+    svTitle.value = withRepeat(withTiming(0.03, { duration, easing },), -1, true);
+  }, []);
+
+  const animatedIconStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${svIcon.value * 360}deg` }],
+  }));
+
+  const animatedTitleStyle = useAnimatedStyle(() => ({
+    transform: [{ rotate: `${svTitle.value * 360}deg` }],
+  }));
 
   return (
     <Modal animationType="slide" transparent={true} visible={show} onShow={(e) => {  updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000) }}>
       <View className={styles.modalContainer} >
         <View className={styles.deckTypePopup}>
           <View className={styles.popupIconContainer}>
-            <Image source={deck.icon} resizeMode={'contain'} style={{width: 150, height: 150}}/>
+            <Animated.View style={[animatedIconStyle]}>
+              <Image source={deck.icon} resizeMode={'contain'} style={{width: 150, height: 150}}/>
+            </Animated.View>
           </View>
-          <Text className={styles.popupTitle}>
-            { deck.name }
-          </Text>
+          <Animated.View style={[animatedTitleStyle]}>
+            <Text className={styles.popupTitle}>
+              { deck.name.toUpperCase() }
+            </Text>
+          </Animated.View>
+   
           <Text className={styles.popupBlurb}>
-            { deck.message }
+            { deck.message.toUpperCase() }
           </Text>
         </View>
       </View>
@@ -107,7 +137,7 @@ function updateSpinnerSpunAfterDuration(
 const styles = {
   deckTypePopup: `items-center justify-center bg-blue-500 border-4 border-purple-500 m-auto p-4 rounded-[10] w-3/4 m-auto `,
   modalContainer: 'flex1 h-full',
-  popupTitle: 'text-center text-3xl bg-slate-500 font-bold w-full font-bold my-3 rounded-[10] rotate-[10deg] px-3 py-1',
-  popupBlurb: 'text-center text-2xl text-bold my-3 text-m',
+  popupTitle: 'text-center text-3xl font-extrabold w-full font-bold my-5 rounded-[10] px-3 py-1 bg-onairred text-white',
+  popupBlurb: 'text-center text-medium font-bold my-5 py-2 px-5 w-full bg-slate-500 mt-[50px]',
   popupIconContainer: 'my-4 bg-amber-300 p-2 rounded-[100]'
 };
