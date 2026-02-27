@@ -57,12 +57,13 @@ export const Spinner = () => {
           y: CY,
         }
 
+        //Get angle in deg from center of circle
         const touchDeg = Math.atan2(e.absoluteY - CY, e.absoluteX - CX) * (180 / Math.PI);
 
         let delta = touchDeg - startAngle.value;
         delta = normalizeDelta(delta);
         
-        angle.value = startRotation.value + delta;
+        angle.value = startRotation.value + delta*2;
 
         const omegaDegrees = getAngularVelocityFromPan(currentPoint, currentVel, centerPoint);
         velocity.value = omegaDegrees;
@@ -73,7 +74,7 @@ export const Spinner = () => {
 
         console.log('omg', omega);
                
-        if(Math.abs(omega) < 80) {
+        if(Math.abs(omega) < 100) {
           return;
         }
 
