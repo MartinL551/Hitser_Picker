@@ -25,13 +25,22 @@ const MIN_RADIUS_SQUARED = 0.000001;
 export const Spinner = () => {
 
     const angle = useSharedValue(0);
+    const startAngle = useSharedValue(0);
+    const startRotation = useSharedValue(0);
     const velocity = useSharedValue(0);
     const WHEEL_SIZE = 300;
+    const CX = WHEEL_SIZE / 2;
+    const CY = WHEEL_SIZE / 2;
 
     const { setSpinnerPosition, setSpinnerSpun,} = useSpinner();
     const { entries } = useDecks();
   
     const panGesture = Gesture.Pan()
+      .onBegin((e) => {
+        const touchDeg = Math.atan2(e.absoluteY - CY, e.absoluteX - CX) * (180 / Math.PI);
+        startAngle.value = touchDeg;
+        startRotation.value = angle.value;
+      })
       .onUpdate((e) => {
         const currentVel = {
           vx: e.velocityX,
@@ -44,11 +53,16 @@ export const Spinner = () => {
         }
 
         const centerPoint = {
-          x: WHEEL_SIZE / 2,
-          y: WHEEL_SIZE / 2,
+          x: CX,
+          y: CY,
         }
 
-        console.log('tx', e.translationX, 'ty', e.translationY);
+        const touchDeg = Math.atan2(e.absoluteY - CY, e.absoluteX - CX) * (180 / Math.PI);
+
+        let delta = touchDeg - startAngle.value;
+        delta = normalizeDelta(delta);
+        
+        angle.value = startRotation.value + delta;
 
         const omegaDegrees = getAngularVelocityFromPan(currentPoint, currentVel, centerPoint);
         velocity.value = omegaDegrees;
@@ -56,6 +70,8 @@ export const Spinner = () => {
       .onFinalize((e) => {
         const MIN_SPIN_DEG = 420;
         const omega = velocity.value;
+
+        console.log('omg', omega);
                
         if(Math.abs(omega) < 80) {
           return;
@@ -110,6 +126,8 @@ function getAngularVelocityFromPan(
   velocity: Velocity,
   center: Point,
 ): number{
+  "worklet";
+
   const radiusX = position.x - center.x;
   const radiusY = position.y - center.y;
 
@@ -127,4 +145,19 @@ function getAngularVelocityFromPan(
 
   return omegaDegrees;
 }
+
+function normalizeDelta(delta: number) {
+  "worklet";
+  // keep delta in [-180, 180] so it doesn't jump across the wrap point
+  if (delta > 180) { 
+    return delta - 360;
+  }
+
+  if (delta < -180) {
+    return delta + 360;
+  }
+
+  return delta;
+}
+
 
