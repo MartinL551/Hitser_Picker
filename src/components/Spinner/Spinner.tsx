@@ -26,6 +26,7 @@ export const Spinner = () => {
 
     const angle = useSharedValue(0);
     const velocity = useSharedValue(0);
+    const WHEEL_SIZE = 300;
 
     const { setSpinnerPosition, setSpinnerSpun,} = useSpinner();
     const { entries } = useDecks();
@@ -41,16 +42,42 @@ export const Spinner = () => {
           x: e.absoluteX, 
           y: e.absoluteY,
         }
+
+        const centerPoint = {
+          x: WHEEL_SIZE / 2,
+          y: WHEEL_SIZE / 2,
+        }
+
+        console.log('tx', e.translationX, 'ty', e.translationY);
+
+        const omegaDegrees = getAngularVelocityFromPan(currentPoint, currentVel, centerPoint);
+        velocity.value = omegaDegrees;
       })
-      .onFinalize((e) => { 
-        if(velocity.value < 300) {
+      .onFinalize((e) => {
+        const MIN_SPIN_DEG = 420;
+        const omega = velocity.value;
+               
+        if(Math.abs(omega) < 80) {
           return;
         }
-        
-        const finalAngle = velocity.value % 360;
+
+        // work out distance to spin
+        const spinDistance = omega * 15;
+        const spinDistanceWithMin = Math.sign(spinDistance) * Math.max(Math.abs(spinDistance), MIN_SPIN_DEG);
+
+        // get speed value from omgea velcocity and use this to compute the duration in ms
+        const speed = Math.abs(omega);
+        const durationMs = 600 + Math.min(2000, speed * 5); 
+
+        // workout target angle from the start angle value. 
+        const start = angle.value;
+        const target = start + spinDistanceWithMin;
+
+
         const hasActivedeck = entries.filter((deck) => deck.active === true).length > 0; 
-        angle.value = withTiming(velocity.value, { duration: velocity.value, easing: Easing.bezier(0.24, 0.76, 0.17, 0.78)}, (complete) => {
+        angle.value = withTiming(target, { duration: durationMs, easing: Easing.bezier(0.21, 0.68, 0, 0.95)}, (complete) => {
           if(complete && hasActivedeck){
+            const finalAngle = ((target % 360) + 360) % 360; 
             scheduleOnRN(updateSpinnerSpun, setSpinnerPosition, setSpinnerSpun, true, finalAngle);
           }
         });
@@ -62,7 +89,7 @@ export const Spinner = () => {
   return (
     <GestureDetector gesture={panGesture}>
       <Animated.View style={[animatedStyle]}>
-         <Image source={require(`../../../assets/icons/record.png`)}  resizeMode={'cover'} style={{width: 300, height: 300}}/>
+         <Image source={require(`../../../assets/icons/record.png`)}  resizeMode={'cover'} style={{width: WHEEL_SIZE , height: WHEEL_SIZE }}/>
       </ Animated.View>
     </GestureDetector> 
   );
@@ -86,7 +113,7 @@ function getAngularVelocityFromPan(
   const radiusX = position.x - center.x;
   const radiusY = position.y - center.y;
 
-  const radiusSquared = radiusX^2 + radiusY^2;
+  const radiusSquared = radiusX * radiusX + radiusY * radiusY;
 
   if(radiusSquared < MIN_RADIUS_SQUARED) {
     return 0;
