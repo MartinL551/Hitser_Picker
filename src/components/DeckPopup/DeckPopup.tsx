@@ -59,7 +59,6 @@ export const DeckPopup = ({deck} :Props) => {
               { deck.name.toUpperCase() }
             </Text>
           </Animated.View>
-   
           <Text className={styles.popupBlurb}>
             { deck.message.toUpperCase() }
           </Text>

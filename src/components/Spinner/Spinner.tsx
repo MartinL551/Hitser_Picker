@@ -107,7 +107,7 @@ export const Spinner = () => {
     <ImageBackground source={require(`../../../assets/textures/woodTexture.png`)}  resizeMode={'repeat'} style={{width: '100%', height: '100%' }}>
       <View className={styles.recordPlayerContainer}>
         <View className={styles.stylusContainer}>
-          <Image source={require(`../../../assets/icons/playerstylusV5.png`)} resizeMode={'contain'} style={{width: '100%', height: 60}}/>
+          <Image source={require(`../../../assets/icons/playerstylusV6.png`)} resizeMode={'contain'} style={{width: '100%', height: 60}}/>
         </View>
         <GestureDetector gesture={panGesture}>
           <Animated.View style={[animatedStyle]}>
