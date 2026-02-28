@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View  } from 'react-native';
+import { Image, View, ImageBackground  } from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
 import Animated, {
@@ -101,22 +101,24 @@ export const Spinner = () => {
 
       })
 
-    const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
+    const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg'},], width: WHEEL_SIZE , height: WHEEL_SIZE, alignSelf: 'center' }))
 
   return (
-    <View>
-      <View className={styles.stylusContainer}>
-        <Image source={require(`../../../assets/icons/playerstylusV2.png`)}  style={{width: '100%', height: 50 }}/>
+    <ImageBackground source={require(`../../../assets/textures/woodTexture.png`)}  resizeMode={'repeat'} style={{width: '100%', height: '100%' }}>
+      <View className={styles.recordPlayerContainer}>
+        <View className={styles.stylusContainer}>
+          <Image source={require(`../../../assets/icons/playerstylusV5.png`)} resizeMode={'contain'} style={{width: '100%', height: 60}}/>
+        </View>
+        <GestureDetector gesture={panGesture}>
+          <Animated.View style={[animatedStyle]}>
+            <Image source={require(`../../../assets/icons/recordV2.png`)}  resizeMode={'cover'} style={{width: WHEEL_SIZE , height: WHEEL_SIZE }}/>
+          </ Animated.View>
+        </GestureDetector>
+        <View className={styles.knobContainer}>
+          <Image source={require(`../../../assets/icons/controlknobV2.png`)}  style={{width: 40, height: 40 }}/>
+        </View>
       </View>
-      <GestureDetector gesture={panGesture}>
-        <Animated.View style={[animatedStyle]}>
-          <Image source={require(`../../../assets/icons/recordV2.png`)}  resizeMode={'cover'} style={{width: WHEEL_SIZE , height: WHEEL_SIZE }}/>
-        </ Animated.View>
-      </GestureDetector>
-      <View className={styles.stylusContainer}>
-        <Image source={require(`../../../assets/icons/controlknobV2.png`)}  style={{width: 40, height: 40 }}/>
-      </View>
-    </View>
+    </ImageBackground>
   );
 };
 
@@ -170,7 +172,9 @@ function normalizeDelta(delta: number) {
 }
 
 const styles = {
-  stylusContainer: 'mt-3',
+  stylusContainer: 'mr-1',
+  recordPlayerContainer: 'flex p-5',
+  knobContainer: 'w-[40px] self-center mr-[200px]',
 };
 
 

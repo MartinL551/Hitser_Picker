@@ -5,8 +5,9 @@
 
 :root {
   --color-deckgrey: 49 49 49; /* use RGB channels, not hex */
-  --color-deckwood: 153 113 82;
+  --color-deckwood: 177 110 77;
   --color-onairred: 177 51 54;
   --color-label: 237 232 208;
   --color-deckgold: 240 230 140;
+  --color-deckblack: 30 31 28;
 }

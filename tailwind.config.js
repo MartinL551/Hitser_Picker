@@ -11,6 +11,7 @@ module.exports = {
         onairred: 'rgb(var(--color-onairred) / <alpha-value>)',
         label: 'rgb(var(--color-label) / <alpha-value>)',
         deckgold: 'rgb(var(--color-deckgold) / <alpha-value>)',
+        deckblack: 'rgb(var(--color-deckblack) / <alpha-value>)',
       },
     },
   },
