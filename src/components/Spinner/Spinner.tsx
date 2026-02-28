@@ -104,7 +104,7 @@ export const Spinner = () => {
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg'},], width: WHEEL_SIZE , height: WHEEL_SIZE, alignSelf: 'center' }))
 
   return (
-    <ImageBackground source={require(`../../../assets/textures/woodTexture.png`)}  resizeMode={'repeat'} style={{width: '100%', height: '100%' }}>
+    <ImageBackground source={require(`../../../assets/textures/woodTexture.png`)} resizeMode={'repeat'} style={{width: '100%'}}>
       <View className={styles.recordPlayerContainer}>
         <View className={styles.stylusContainer}>
           <Image source={require(`../../../assets/icons/playerstylusV6.png`)} resizeMode={'contain'} style={{width: '100%', height: 60}}/>
