@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image  } from 'react-native';
+import { Image, View  } from 'react-native';
 import { scheduleOnRN } from 'react-native-worklets';
 import { Gesture, GestureDetector, } from 'react-native-gesture-handler';
 import Animated, {
@@ -104,11 +104,19 @@ export const Spinner = () => {
     const animatedStyle = useAnimatedStyle(() => ({transform: [{ rotate: angle.value.toString() + 'deg' }]}))
 
   return (
-    <GestureDetector gesture={panGesture}>
-      <Animated.View style={[animatedStyle]}>
-         <Image source={require(`../../../assets/icons/record.png`)}  resizeMode={'cover'} style={{width: WHEEL_SIZE , height: WHEEL_SIZE }}/>
-      </ Animated.View>
-    </GestureDetector> 
+    <View>
+      <View className={styles.stylusContainer}>
+        <Image source={require(`../../../assets/icons/playerstylusV2.png`)}  style={{width: '100%', height: 50 }}/>
+      </View>
+      <GestureDetector gesture={panGesture}>
+        <Animated.View style={[animatedStyle]}>
+          <Image source={require(`../../../assets/icons/recordV2.png`)}  resizeMode={'cover'} style={{width: WHEEL_SIZE , height: WHEEL_SIZE }}/>
+        </ Animated.View>
+      </GestureDetector>
+      <View className={styles.stylusContainer}>
+        <Image source={require(`../../../assets/icons/controlknobV2.png`)}  style={{width: 40, height: 40 }}/>
+      </View>
+    </View>
   );
 };
 
@@ -160,5 +168,10 @@ function normalizeDelta(delta: number) {
 
   return delta;
 }
+
+const styles = {
+  stylusContainer: 'mt-3',
+};
+
 
 
