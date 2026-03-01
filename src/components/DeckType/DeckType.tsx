@@ -3,7 +3,6 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
-import '../../modules/i18n'; // Import i18n configuration
 import { useTranslation } from 'react-i18next';
 
 type Props = {
@@ -13,7 +12,7 @@ type Props = {
 
 export const DeckType = ({deck, index} :Props) => {
   const { entries, setEntries } = useDecks();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const typeKey = deck.type;
 
   return (

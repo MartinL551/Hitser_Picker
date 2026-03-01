@@ -1,6 +1,3 @@
-import { ScreenContent } from '@/components/ScreenContent';
-import { StatusBar } from 'expo-status-bar';
-import { HitserProvider } from '@/store/HisterContext';
 import { DecksProvider } from '@/store/DecksContext';
 import { SpinnerProvider } from '@/store/SpinnerContext';
 import { SpinnerScreen } from '@/screens/spinner/SpinnerScreen';
@@ -9,7 +6,13 @@ import {
   GestureHandlerRootView,
 } from 'react-native-gesture-handler';
 
+import 'src/modules/i18n'; // Import i18n configuration
+
+
+
 export default function App() {
+
+
   return (
       <GestureHandlerRootView>
         <SpinnerProvider >

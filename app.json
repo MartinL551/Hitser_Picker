@@ -12,13 +12,7 @@
       "tsconfigPaths": true
     },
 
-    "plugins": [ [
-             "react-native-localization-settings", 
-        { 
-          "languages": ["en", "pl"] 
-        }
-    ]       
- 
+    "plugins": [     
     ],
 
     "orientation": "portrait",

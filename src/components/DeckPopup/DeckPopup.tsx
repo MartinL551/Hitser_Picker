@@ -5,12 +5,12 @@ import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
 import Animated, {
   useSharedValue,
-  withSpring,
   withTiming,
   withRepeat,
   useAnimatedStyle,
   Easing,
 } from 'react-native-reanimated';
+import { useTranslation } from 'react-i18next';
 
 type SegmentAngles = {
   minAngle: number;
@@ -25,6 +25,8 @@ type Props = {
 export const DeckPopup = ({deck} :Props) => {
   const { entries } = useDecks();
   const { spinnerPosition, spinnerSpun, setSpinnerSpun} = useSpinner();
+  const { t } = useTranslation();
+  const typeKey = deck.type;
 
   let show = spinnerSpun && isSelecteddeck(spinnerPosition, entries, deck);
   const duration = 1000;
@@ -56,11 +58,11 @@ export const DeckPopup = ({deck} :Props) => {
           </View>
           <Animated.View style={[animatedTitleStyle]}>
             <Text className={styles.popupTitle}>
-              { deck.name.toUpperCase() }
+              { t(typeKey, { ns: 'histerTitles' }) }
             </Text>
           </Animated.View>
           <Text className={styles.popupBlurb}>
-            { deck.message.toUpperCase() }
+            { t(typeKey, { ns: 'histerBlurbs' }) }
           </Text>
         </View>
       </View>

@@ -5,11 +5,13 @@ import { DeckType } from '@/components/DeckType/DeckType';
 import { DeckPopup } from '@/components/DeckPopup/DeckPopup';
 import { DeckItemInterface } from '@/types/DeckItemInterface';
 import { useDecks } from '@/hooks/storeHooks';
+import { useTranslation } from 'react-i18next';
 
 
 
 export const SpinnerScreen = () => {
   const { entries } = useDecks();
+  const { t } = useTranslation();
 
   return (
     <View className={styles.screenContainer}>
@@ -18,7 +20,7 @@ export const SpinnerScreen = () => {
       </View>
 
       <View className={styles.decksTitleContainer}>
-        <Text className={styles.decksTitle}> Selected Decks </Text>
+        <Text className={styles.decksTitle}> {t('deckTitle', { ns: 'ui' })} </Text>
       </View>
       <View className={styles.decksContainer}>
         { 

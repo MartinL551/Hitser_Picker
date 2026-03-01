@@ -1,3 +1,10 @@
 {
-    "ORG": "The OGEn"
+    "ORG": "ORGen",
+    "GPS": "GPSen",
+    "SCP": "SCPen",
+    "SMP": "SMPen",
+    "RAR": "RARen",
+    "PED": "PEDen",
+    "CES": "CESen",
+    "BIN": "BINen"
 }
