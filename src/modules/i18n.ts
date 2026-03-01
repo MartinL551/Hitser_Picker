@@ -5,13 +5,15 @@ import i18next from 'i18next';
 import Constants from "expo-constants";
 
 
-import histerTitleEn from '../locales/en/hister_decks_titles.json'
-import histerBlurbEn from '../locales/en/hister_decks_blurbs.json'
-import uiEn from '../locales/en/ui.json'
+import histerTitleEn from '../locales/en/hister_decks_titles.json';
+import histerBlurbEn from '../locales/en/hister_decks_blurbs.json';
+import uiEn from '../locales/en/ui.json';
+import tutorialEn from '../locales/en/tutorial.json';
 
-import histerTitleDe from '../locales/de/hister_decks_titles.json'
-import histerBlurbDe from '../locales/de/hister_decks_blurbs.json'
-import uiDe from '../locales/de/ui.json'
+import histerTitleDe from '../locales/de/hister_decks_titles.json';
+import histerBlurbDe from '../locales/de/hister_decks_blurbs.json';
+import uiDe from '../locales/de/ui.json';
+import tutorialDe from '../locales/de/tutorial.json';
 
 
 
@@ -38,17 +40,19 @@ i18next
   .use(initReactI18next)
   .init({
     fallbackLng: "en",
-    ns: ["histerTitles", "histerBlurbs", "ui"],
+    ns: ["histerTitles", "histerBlurbs", "ui", "tutorial"],
     resources: {
         en: {
             histerTitles: histerTitleEn,
             histerBlurbs: histerBlurbEn,
-            ui: uiEn
+            ui: uiEn,
+            tutorial: tutorialEn,
         },
         de: {
             histerTitles: histerTitleDe,
             histerBlurbs: histerBlurbDe,
-            ui: uiDe
+            ui: uiDe,
+            tutorial: tutorialDe,
         }
     },
     interpolation: {

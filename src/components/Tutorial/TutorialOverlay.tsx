@@ -7,6 +7,7 @@ import Animated, {
   withRepeat,
   Easing,
 } from "react-native-reanimated";
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   visible: boolean;
@@ -15,6 +16,7 @@ type Props = {
 
 export function TutorialOverlay({ visible, onDismiss }: Props) {
   const x = useSharedValue(0);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!visible) return;
@@ -40,7 +42,7 @@ export function TutorialOverlay({ visible, onDismiss }: Props) {
     >
       <View className={styles.contentContainer}>
         <Text className={styles.tutorialText}>
-          Drag the record to spin
+          {t('tutorialText', { ns: 'tutorial' })}
         </Text>
 
         <View className={styles.iconContainer}>
@@ -54,7 +56,7 @@ export function TutorialOverlay({ visible, onDismiss }: Props) {
         </View>
 
         <Text className={styles.tutorialText}>
-          Tap to continue
+          {t('continue', { ns: 'tutorial' })}
         </Text>
       </View>
     </Pressable>
