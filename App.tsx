@@ -14,6 +14,7 @@ export default function App() {
    useFonts({
     //register fonts for metro/expo
     BitcountPropDoubleInk: require("./assets/fonts/BitcountPropDouble_Regular.ttf"),
+    BitcountPropDoubleInkBold: require("./assets/fonts/BitcountPropDouble_Bold.ttf")
   });
 
   return (

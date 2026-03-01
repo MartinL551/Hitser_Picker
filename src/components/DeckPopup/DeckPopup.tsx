@@ -29,7 +29,6 @@ export const DeckPopup = ({deck} :Props) => {
   const typeKey = deck.type;
 
   let show = spinnerSpun && isSelecteddeck(spinnerPosition, entries, deck);
-  show = true;
   const duration = 1000;
   const easing = Easing.bezier(0.66, -1, 0.27, 1.98);
   const svIcon = useSharedValue<number>(0.05);
@@ -137,9 +136,9 @@ function updateSpinnerSpunAfterDuration(
 
 
 const styles = {
-  deckTypePopup: `items-center justify-center bg-blue-400 border-4 border-purple-500 m-auto p-4 rounded-[10] w-3/4 m-auto`,
+  deckTypePopup: `items-center justify-center bg-blue-400 border-4 border-blue-500 m-auto p-4 rounded-[10] w-3/4 m-auto bg-opacity-50`,
   modalContainer: 'flex1 h-full',
-  popupTitle: 'text-center text-3xl font-extrabold w-full font-bold my-5 rounded-[10] px-3 py-1 bg-onairred text-white font-bitcount',
-  popupBlurb: 'text-center text-medium font-bold my-5 py-2 px-5 w-full bg-slate-500 mt-[50px] font-bitcount',
+  popupTitle: 'text-center text-3xl w-full my-5 rounded-[10] px-3 py-1 bg-onairred text-white font-bitcount-bold',
+  popupBlurb: 'text-center text-medium my-5 py-2 px-5 w-full bg-white mt-[50px] font-bitcount-bold',
   popupIconContainer: 'my-4 bg-amber-300 p-2 rounded-[100]'
 };

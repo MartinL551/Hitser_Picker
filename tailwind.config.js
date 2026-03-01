@@ -17,6 +17,7 @@ module.exports = {
       },
       fontFamily: {
         bitcount: ['BitcountPropDoubleInk'],
+        "bitcount-bold": ['BitcountPropDoubleInkBold'],
       },
     },
   },
