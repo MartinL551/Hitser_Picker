@@ -27,8 +27,8 @@ export async function saveShownTutorialState(flag: boolean) {
     await AsyncStorage.setItem(TUTORIAL_KEY, JSON.stringify(flag));
 }
 
-export async function  loadShownTutorialState():Promise<null | boolean> {
-    const rawData = await AsyncStorage.getItem(DECK_KEY);
+export async function loadShownTutorialState():Promise<null | boolean> {
+    const rawData = await AsyncStorage.getItem(TUTORIAL_KEY);
 
     if(!rawData) {
         return null;

@@ -19,7 +19,7 @@ export default function App() {
     BitcountPropDoubleInkBold: require("./assets/fonts/BitcountPropDouble_Bold.ttf")
   });
 
- 
+  // Show splash until fonts are loaded
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
@@ -27,11 +27,12 @@ export default function App() {
   }, [fontsLoaded]);
 
   if (!fontsLoaded) {
-    return null; // keep splash until font is ready
+    return null;
   }
 
   return (
       <GestureHandlerRootView>
+
         <SpinnerProvider >
           <DecksProvider>
               <SpinnerScreen />

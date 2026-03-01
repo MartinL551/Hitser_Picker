@@ -1,24 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { View, Text} from 'react-native';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { DeckType } from '@/components/DeckType/DeckType';
 import { DeckPopup } from '@/components/DeckPopup/DeckPopup';
+import { TutorialOverlay } from '@/components/Tutorial/TutorialOverlay';
 import { DeckItemInterface } from '@/types/DeckItemInterface';
 import { useDecks } from '@/hooks/storeHooks';
 import { useTranslation } from 'react-i18next';
+import { saveShownTutorialState, loadShownTutorialState } from '@/store/PersistStore';
 
 
 
 export const SpinnerScreen = () => {
   const { entries } = useDecks();
   const { t } = useTranslation();
+  const [showTutorial, setShowTutorial] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const currentState = await loadShownTutorialState();
+      setShowTutorial(currentState !== true);
+    })();
+  }, []);
+
+  
+  const dismiss = async () => {
+    await saveShownTutorialState(true);
+    setShowTutorial(false);
+  };
 
   return (
     <View className={styles.screenContainer}>
+      <TutorialOverlay visible={showTutorial} onDismiss={dismiss}/>
       <View className={styles.spinnerContainer}>
           <Spinner/>
       </View>
-
       <View className={styles.decksTitleContainer}>
         <Text className={styles.decksTitle}> {t('deckTitle', { ns: 'ui' })} </Text>
       </View>
