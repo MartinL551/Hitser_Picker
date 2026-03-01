@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+import { platformSelect } from "nativewind/theme";
+
 module.exports = {
   content: ['./App.{js,ts,tsx}', './src/**/*.{js,ts,tsx}'],
   darkMode: "class",
@@ -12,6 +14,9 @@ module.exports = {
         label: 'rgb(var(--color-label) / <alpha-value>)',
         deckgold: 'rgb(var(--color-deckgold) / <alpha-value>)',
         deckblack: 'rgb(var(--color-deckblack) / <alpha-value>)',
+      },
+      fontFamily: {
+        bitcount: ['BitcountPropDoubleInk'],
       },
     },
   },

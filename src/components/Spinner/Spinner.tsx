@@ -71,8 +71,6 @@ export const Spinner = () => {
       .onFinalize((e) => {
         const MIN_SPIN_DEG = 420;
         const omega = velocity.value;
-
-        console.log('omg', omega);
                
         if(Math.abs(omega) < 100) {
           return;

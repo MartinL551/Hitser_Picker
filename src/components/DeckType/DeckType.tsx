@@ -44,7 +44,7 @@ const styles = {
   deckTypeInactive: `flex flex-row items-center justify-center px-3 mx-2 my-3 border-2 border-red-500 rounded-[10] bg-orange-500`,
   deckTypeContainer: 'flex items-center justify-end basis-1/4 p-1',
   deckTitleContainer: 'flex items-center justify-center w-full h-[40px] bg-label',
-  deckTitle: 'text-center text-xs font-bold'
+  deckTitle: 'text-center text-xs font-bold font-bitcount'
 };
 
 

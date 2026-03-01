@@ -41,7 +41,7 @@ const styles = {
   decksContainer: 'flex-row flex-wrap px-2 py-2 bg-deckgrey w-full',
   spinnerContainer: 'items-center justify-center border-4 border-deckgrey bg-deckwood w-full bg-deckwood',
   decksTitleContainer: 'w-full flex items-center bg-deckgrey',
-  decksTitle: 'text-center text-2xl bg-deckgold px-4 py-2 my-2 font-bold'
+  decksTitle: 'text-center text-2xl bg-deckgold px-4 py-2 my-2 font-bold font-bitcount'
 };
 
 

@@ -3,30 +3,28 @@
     "name": "Music_Game_Selector",
     "slug": "Music_Game_Selector",
     "version": "1.0.0",
-
     "web": {
       "favicon": "./assets/favicon.png"
     },
-
     "experiments": {
       "tsconfigPaths": true
     },
-
-    "plugins": [   
-      ["expo-localization"]  
+    "plugins": [
+      [
+        "expo-localization"
+      ]
     ],
-
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-
     "userInterfaceStyle": "light",
-
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
@@ -38,7 +36,6 @@
       "package": "com.martin.music_game_selector",
       "versionCode": 1
     },
-
     "extra": {
       "debug": {
         "lang": "de"
