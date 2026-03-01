@@ -12,7 +12,8 @@
       "tsconfigPaths": true
     },
 
-    "plugins": [     
+    "plugins": [   
+      ["expo-localization"]  
     ],
 
     "orientation": "portrait",
@@ -36,6 +37,12 @@
       },
       "package": "com.martin.music_game_selector",
       "versionCode": 1
+    },
+
+    "extra": {
+      "debug": {
+        "lang": "de"
+      }
     }
   }
 }
