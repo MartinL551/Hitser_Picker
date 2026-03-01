@@ -136,7 +136,7 @@ function updateSpinnerSpunAfterDuration(
 
 
 const styles = {
-  deckTypePopup: `items-center justify-center bg-blue-400 border-4 border-blue-500 m-auto p-4 rounded-[50] w-5/6 m-auto bg-opacity-70`,
+  deckTypePopup: `items-center justify-center bg-blue-400 border-4 border-blue-500 m-auto p-4 rounded-[50] w-5/6 m-auto bg-opacity-80`,
   modalContainer: 'flex1 h-full',
   popupTitle: 'text-center text-3xl w-full my-5 rounded-[10] px-3 py-1 bg-onairred text-white font-bitcount-bold',
   popupBlurb: 'text-center text-medium my-5 py-2 px-5 w-full bg-white mt-[50px] font-bitcount-bold rounded-[10]',
