@@ -2,7 +2,6 @@ import * as React from 'react';
 import type { DeckItemsContextType, DeckItemsInterface } from '@/types/DeckItemsType';
 import { loadDeckState, saveDeckState } from './PersistStore';
 
-
 const initialEntiresState : DeckItemsInterface = [
     {
         icon: require(`../../assets/icons/record.png`),

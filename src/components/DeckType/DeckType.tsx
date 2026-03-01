@@ -3,6 +3,8 @@ import { Text, View, TouchableOpacity, Image } from 'react-native';
 import { useDecks } from '@/hooks/storeHooks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
+import '../../modules/i18n'; // Import i18n configuration
+import { useTranslation } from 'react-i18next';
 
 type Props = {
   deck: DeckItemInterface,
@@ -11,11 +13,13 @@ type Props = {
 
 export const DeckType = ({deck, index} :Props) => {
   const { entries, setEntries } = useDecks();
+  const { t, i18n } = useTranslation();
+  const typeKey = deck.type;
 
   return (
     <View className={styles.deckTypeContainer}>
         <View className={styles.deckTitleContainer}>
-            <Text className={styles.deckTitle}>{deck.name.toUpperCase()}</Text>
+            <Text className={styles.deckTitle}>{t(typeKey, { ns: 'histerTitles' })}</Text>
         </View>
         <TouchableOpacity className={deck.active ? styles.deckTypeActive : styles.deckTypeInactive } onPress={() => activeOnPress(deck, index, entries, setEntries)}  style={{width: 50, height: 50}}> 
             <Image source={deck.icon}  resizeMode={'contain'} style={{width: 40, height: 40}}/>
