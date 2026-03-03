@@ -13,8 +13,8 @@ import { getAngularVelocityFromPan, normalizeDelta } from '@/utlis/spinnerMath';
 import { 
   MIN_SPIN_DEG,
   BASE_SPIN_DURATION,
-  MAX_SPIN_DURATION 
-
+  MAX_SPIN_DURATION,
+  MIN_SPIN_THRESHOLD
 } from '@/constants/spinner';
 
 export const Spinner = () => {
@@ -65,7 +65,7 @@ export const Spinner = () => {
     .onFinalize((e) => {
       const omega = velocity.value;
 
-      if (Math.abs(omega) < 100) {
+      if (Math.abs(omega) < MIN_SPIN_THRESHOLD) {
         return;
       }
 
