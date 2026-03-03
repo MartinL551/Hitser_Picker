@@ -1,7 +1,4 @@
-import { 
-    getAngularVelocityFromPan, 
-    normalizeDelta
-} from '@/utlis/spinnerMath';
+import { getAngularVelocityFromPan, normalizeDelta } from '@/utlis/spinnerMath';
 
 type Point = { x: number; y: number };
 type Velocity = { vx: number; vy: number };
@@ -130,7 +127,7 @@ describe('normalizeDelta', () => {
   });
 
   test('handles large positive values (single wrap only)', () => {
-    expect(normalizeDelta(540)).toBe(180);  // 540 - 360 = 180
+    expect(normalizeDelta(540)).toBe(180); // 540 - 360 = 180
   });
 
   test('handles large negative values (single wrap only)', () => {

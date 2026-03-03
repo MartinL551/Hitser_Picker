@@ -1,6 +1,4 @@
-import { 
-    MIN_RADIUS_SQUARED 
-} from '../constants/spinner';
+import { MIN_RADIUS_SQUARED } from '../constants/spinner';
 
 type Point = {
   x: number;
@@ -12,7 +10,11 @@ type Velocity = {
   vy: number;
 };
 
-export function getAngularVelocityFromPan(position: Point, velocity: Velocity, center: Point): number {
+export function getAngularVelocityFromPan(
+  position: Point,
+  velocity: Velocity,
+  center: Point
+): number {
   'worklet';
 
   const radiusX = position.x - center.x;
@@ -32,8 +34,6 @@ export function getAngularVelocityFromPan(position: Point, velocity: Velocity, c
 
   return omegaDegrees;
 }
-
-
 
 export function normalizeDelta(delta: number) {
   'worklet';

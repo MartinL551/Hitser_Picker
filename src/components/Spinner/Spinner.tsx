@@ -10,11 +10,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useDecks, useSpinner } from '@/hooks/storeHooks';
 import { getAngularVelocityFromPan, normalizeDelta } from '@/utlis/spinnerMath';
-import { 
+import {
   MIN_SPIN_DEG,
   BASE_SPIN_DURATION,
   MAX_SPIN_DURATION,
-  MIN_SPIN_THRESHOLD
+  MIN_SPIN_THRESHOLD,
 } from '@/constants/spinner';
 
 export const Spinner = () => {
