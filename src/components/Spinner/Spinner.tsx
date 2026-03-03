@@ -87,9 +87,13 @@ export const Spinner = () => {
         target,
         { duration: durationMs, easing: Easing.bezier(0.21, 0.68, 0, 0.95) },
         (complete) => {
+          'worklet';
+
           if (complete && hasActivedeck) {
             const finalAngle = ((target % 360) + 360) % 360;
-            scheduleOnRN(updateSpinnerSpun, setSpinnerPosition, setSpinnerSpun, true, finalAngle);
+            scheduleOnRN(() => {
+              updateSpinnerSpun(setSpinnerPosition, setSpinnerSpun, true, finalAngle);
+            });
           }
         }
       );
