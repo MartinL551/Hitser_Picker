@@ -11,11 +11,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { useTranslation } from 'react-i18next';
-
-type SegmentAngles = {
-  minAngle: number;
-  maxAngle: number;
-};
+import { isAngleInRange, getSegmentsAngle } from '@/utlis/checkerMath';
 
 type Props = {
   deck: DeckItemInterface;
@@ -101,27 +97,6 @@ function isSelecteddeck(
   }
 
   return false;
-}
-
-function isAngleInRange(angle: number, max: number, min: number): boolean {
-  angle %= 360;
-
-  if (min <= max) {
-    return min <= angle && max >= angle;
-  } else {
-    return angle >= min || angle <= max;
-  }
-}
-
-function getSegmentsAngle(index: number, totalSegments: number): SegmentAngles {
-  const degreesPerSegment = 360 / totalSegments;
-  const minAngle = index * degreesPerSegment;
-  const maxAngle = (index + 1) * degreesPerSegment;
-
-  return {
-    minAngle: minAngle,
-    maxAngle: maxAngle,
-  };
 }
 
 function updateSpinnerSpunAfterDuration(

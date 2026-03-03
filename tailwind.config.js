@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-import { platformSelect } from 'nativewind/theme';
 
 module.exports = {
   content: ['./App.{js,ts,tsx}', './src/**/*.{js,ts,tsx}'],

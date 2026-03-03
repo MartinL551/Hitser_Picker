@@ -9,18 +9,13 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 import { useDecks, useSpinner } from '@/hooks/storeHooks';
+import { getAngularVelocityFromPan, normalizeDelta } from '@/utlis/spinnerMath';
+import { 
+  MIN_SPIN_DEG,
+  BASE_SPIN_DURATION,
+  MAX_SPIN_DURATION 
 
-type Point = {
-  x: number;
-  y: number;
-};
-
-type Velocity = {
-  vx: number;
-  vy: number;
-};
-
-const MIN_RADIUS_SQUARED = 0.000001;
+} from '@/constants/spinner';
 
 export const Spinner = () => {
   const angle = useSharedValue(0);
@@ -68,7 +63,6 @@ export const Spinner = () => {
       velocity.value = omegaDegrees;
     })
     .onFinalize((e) => {
-      const MIN_SPIN_DEG = 420;
       const omega = velocity.value;
 
       if (Math.abs(omega) < 100) {
@@ -82,7 +76,7 @@ export const Spinner = () => {
 
       // get speed value from omgea velcocity and use this to compute the duration in ms
       const speed = Math.abs(omega);
-      const durationMs = 600 + Math.min(2000, speed * 5);
+      const durationMs = BASE_SPIN_DURATION + Math.min(MAX_SPIN_DURATION, speed * 5);
 
       // workout target angle from the start angle value.
       const start = angle.value;
@@ -149,41 +143,6 @@ function updateSpinnerSpun(
 ) {
   setSpinnerPosition(finalAngle);
   setSpinnerSpun(flag);
-}
-
-function getAngularVelocityFromPan(position: Point, velocity: Velocity, center: Point): number {
-  'worklet';
-
-  const radiusX = position.x - center.x;
-  const radiusY = position.y - center.y;
-
-  const radiusSquared = radiusX * radiusX + radiusY * radiusY;
-
-  if (radiusSquared < MIN_RADIUS_SQUARED) {
-    return 0;
-  }
-
-  const tangentialVelocity = radiusX * velocity.vy - radiusY * velocity.vx;
-
-  const omegaRadians = tangentialVelocity / radiusSquared;
-
-  const omegaDegrees = omegaRadians * (180 / Math.PI);
-
-  return omegaDegrees;
-}
-
-function normalizeDelta(delta: number) {
-  'worklet';
-  // keep delta in [-180, 180] so it doesn't jump across the wrap point
-  if (delta > 180) {
-    return delta - 360;
-  }
-
-  if (delta < -180) {
-    return delta + 360;
-  }
-
-  return delta;
 }
 
 const styles = {
