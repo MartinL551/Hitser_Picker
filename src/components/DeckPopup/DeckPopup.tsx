@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Text, View, Modal, Image } from 'react-native';
-import { useSpinner, useDecks } from '@/hooks/storeHooks';
+import { useSpinner, useDecks } from '@/hooks/useDecks';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
 import type { DeckItemsInterface } from '@/types/DeckItemsType';
 import Animated, {
@@ -13,12 +13,11 @@ import Animated, {
 import { useTranslation } from 'react-i18next';
 
 type Props = {
-  deck: DeckItemInterface|null;
-  visible: boolean;
+  deck: DeckItemInterface | null;
+  onClose: () => void;
 };
 
-export const DeckPopup = ({ deck, visible }: Props) => {
-  const { setSpinnerSpun } = useSpinner();
+export const DeckPopup = ({ deck, onClose }: Props) => {
   const { t } = useTranslation();
   const typeKey = deck?.type;
   const duration = 1000;
@@ -26,7 +25,7 @@ export const DeckPopup = ({ deck, visible }: Props) => {
   const svIcon = useSharedValue<number>(0.05);
   const svTitle = useSharedValue<number>(-0.03);
 
-  React.useEffect(() => {
+  useEffect(() => {
     svIcon.value = withRepeat(withTiming(-0.05, { duration, easing }), -1, true);
     svTitle.value = withRepeat(withTiming(0.03, { duration, easing }), -1, true);
   }, []);
@@ -41,13 +40,11 @@ export const DeckPopup = ({ deck, visible }: Props) => {
 
   return (
     <Modal
-      animationType="slide"
+      animationType="fade"
       transparent={true}
-      visible={visible}
-      onShow={(e) => {
-        updateSpinnerSpunAfterDuration(setSpinnerSpun, false, 5000);
-      }}>
+      visible={deck != null}
       onRequestClose={onClose}
+    >
       <View className={styles.modalContainer}>
         <View className={styles.deckTypePopup}>
           <View className={styles.popupIconContainer}>
@@ -69,16 +66,6 @@ export const DeckPopup = ({ deck, visible }: Props) => {
   );
 };
 
-
-function updateSpinnerSpunAfterDuration(
-  setSpinnerSpun: React.Dispatch<React.SetStateAction<boolean>>,
-  spunState: boolean,
-  delay: number
-): void {
-  setTimeout(() => {
-    setSpinnerSpun(spunState);
-  }, delay);
-}
 
 const styles = {
   deckTypePopup: `items-center justify-center bg-blue-400 border-4 border-blue-500 m-auto p-4 rounded-[50] w-5/6 m-auto bg-opacity-80`,

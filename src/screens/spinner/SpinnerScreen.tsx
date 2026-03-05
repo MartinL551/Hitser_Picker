@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text } from 'react-native';
 import { Spinner } from '@/components/Spinner/Spinner';
 import { DeckType } from '@/components/DeckType/DeckType';
@@ -7,23 +7,16 @@ import { TutorialOverlay } from '@/components/Tutorial/TutorialOverlay';
 import { useTranslation } from 'react-i18next';
 import { saveShownTutorialState, loadShownTutorialState } from '@/store/PersistStore';
 import type { DeckItemInterface } from '@/types/DeckItemInterface';
-import type { DeckItemsInterface } from '@/types/DeckItemsType';
-import { isAngleInRange, getSegmentsAngle } from '@/utlis/checkerMath';
-import { useSpinner, useDecks } from '@/hooks/storeHooks';
+import { useDecks } from '@/hooks/useDecks';
+import { useAutoDismiss } from '@/hooks/useAutoDismiss';
 
 export const SpinnerScreen = () => {
-  const { spinnerPosition, spinnerSpun } = useSpinner();
   const { entries } = useDecks();
   const { t } = useTranslation();
   const [showTutorial, setShowTutorial] = useState(false);
-  let selectedDeck = getSelectedDeck(spinnerPosition, spinnerSpun, entries);
-
-  useEffect(() => {
-    (async () => {
-      const currentState = await loadShownTutorialState();
-      setShowTutorial(currentState !== true);
-    })();
-  }, []);
+  const [selectedDeck, setSelectedDeck] = useState<DeckItemInterface | null>(null);
+  const closePopup = useCallback(() => setSelectedDeck(null), []);
+  useAutoDismiss(selectedDeck != null, closePopup, 5000);
 
   const dismiss = async () => {
     await saveShownTutorialState(true);
@@ -34,7 +27,7 @@ export const SpinnerScreen = () => {
     <View className={styles.screenContainer}>
       <TutorialOverlay visible={showTutorial} onDismiss={dismiss} />
       <View className={styles.spinnerContainer}>
-        <Spinner />
+        <Spinner onResult={setSelectedDeck} />
       </View>
       <View className={styles.decksTitleContainer}>
         <Text className={styles.decksTitle}> {t('deckTitle', { ns: 'ui' })} </Text>
@@ -45,56 +38,11 @@ export const SpinnerScreen = () => {
         ))}
       </View>
       <View>
-        <DeckPopup deck={selectedDeck} visible={selectedDeck != null} />
+        <DeckPopup onClose={closePopup} deck={selectedDeck} />
       </View>
     </View>
   );
 };
-
-function isSelecteddeck(
-  spinnerPosition: number,
-  deckValues: DeckItemsInterface,
-  deck: DeckItemInterface
-): boolean {
-  if (!deck.active) {
-    return false;
-  }
-
-  const activeDeckValues = deckValues.filter((deck) => deck.active === true);
-  const currentActiveIndex = activeDeckValues.findIndex(
-    (activedeck) => activedeck.type === deck.type
-  );
-
-  if (activeDeckValues.length === 0) {
-    return false;
-  }
-
-  const { minAngle, maxAngle } = getSegmentsAngle(currentActiveIndex, activeDeckValues.length);
-
-  if (spinnerPosition !== null && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
-    return true;
-  }
-
-  return false;
-}
-
-function getSelectedDeck(
-  spinnerPosition: number,
-  spinnerSpun: boolean,
-  deckValues: DeckItemsInterface,
-): null | DeckItemInterface {
-  if(!spinnerSpun) {
-    return null;
-  }
-  
-  for(let i = 0; i < deckValues.length; i++) {
-    if(isSelecteddeck(spinnerPosition, deckValues, deckValues[i])) {
-      return deckValues[i];
-    }
-  }
-
-  return null;
-}
 
 
 const styles = {

@@ -8,7 +8,7 @@ import Animated, {
   useAnimatedStyle,
   Easing,
 } from 'react-native-reanimated';
-import { useDecks, useSpinner } from '@/hooks/storeHooks';
+import { useDecks } from '@/hooks/useDecks';
 import { getAngularVelocityFromPan, normalizeDelta } from '@/utlis/spinnerMath';
 import {
   MIN_SPIN_DEG,
@@ -16,8 +16,15 @@ import {
   MAX_SPIN_DURATION,
   MIN_SPIN_THRESHOLD,
 } from '@/constants/spinner';
+import type { DeckItemInterface } from '@/types/DeckItemInterface';
+import type { DeckItemsInterface } from '@/types/DeckItemsType';
+import { isAngleInRange, getSegmentsAngle } from '@/utlis/checkerMath';
+type Props = {
+  onResult: (deck: DeckItemInterface | null) => void;
+};
 
-export const Spinner = () => {
+
+export const Spinner = ({onResult}: Props) => {
   const angle = useSharedValue(0);
   const startAngle = useSharedValue(0);
   const startRotation = useSharedValue(0);
@@ -25,8 +32,6 @@ export const Spinner = () => {
   const WHEEL_SIZE = 300;
   const CX = WHEEL_SIZE / 2;
   const CY = WHEEL_SIZE / 2;
-
-  const { setSpinnerPosition, setSpinnerSpun } = useSpinner();
   const { entries } = useDecks();
 
   const panGesture = Gesture.Pan()
@@ -92,7 +97,7 @@ export const Spinner = () => {
           if (complete && hasActivedeck) {
             const finalAngle = ((target % 360) + 360) % 360;
             scheduleOnRN(() => {
-              updateSpinnerSpun(setSpinnerPosition, setSpinnerSpun, true, finalAngle);
+              updatePopupState(finalAngle, entries, onResult);
             });
           }
         }
@@ -139,14 +144,18 @@ export const Spinner = () => {
   );
 };
 
-function updateSpinnerSpun(
-  setSpinnerPosition: React.Dispatch<React.SetStateAction<number>>,
-  setSpinnerSpun: React.Dispatch<React.SetStateAction<boolean>>,
-  flag: boolean,
-  finalAngle: number
+function updatePopupState(
+  finalAngle: number,
+  deckValues: DeckItemsInterface,
+  onResult: (deck: DeckItemInterface | null) => void,
 ) {
-  setSpinnerPosition(finalAngle);
-  setSpinnerSpun(flag);
+  const selectedDeck = getSelectedDeck(finalAngle, deckValues);
+
+  if(selectedDeck) {
+    onResult(selectedDeck);
+  } else { 
+    onResult(null);
+  }
 }
 
 const styles = {
@@ -154,3 +163,43 @@ const styles = {
   recordPlayerContainer: 'flex p-5',
   knobContainer: 'w-[40px] self-center mr-[200px]',
 };
+
+function isSelecteddeck(
+  spinnerPosition: number,
+  deckValues: DeckItemsInterface,
+  deck: DeckItemInterface
+): boolean {
+  if (!deck.active) {
+    return false;
+  }
+
+  const activeDeckValues = deckValues.filter((deck) => deck.active === true);
+  const currentActiveIndex = activeDeckValues.findIndex(
+    (activedeck) => activedeck.type === deck.type
+  );
+
+  if (activeDeckValues.length === 0) {
+    return false;
+  }
+
+  const { minAngle, maxAngle } = getSegmentsAngle(currentActiveIndex, activeDeckValues.length);
+
+  if (spinnerPosition !== null && isAngleInRange(spinnerPosition, maxAngle, minAngle)) {
+    return true;
+  }
+
+  return false;
+}
+
+function getSelectedDeck(
+  spinnerPosition: number,
+  deckValues: DeckItemsInterface,
+): null | DeckItemInterface {
+  for(let i = 0; i < deckValues.length; i++) {
+    if(isSelecteddeck(spinnerPosition, deckValues, deckValues[i])) {
+      return deckValues[i];
+    }
+  }
+
+  return null;
+}
