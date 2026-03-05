@@ -29,9 +29,9 @@ export default function App() {
 
   return (
     <GestureHandlerRootView>
-        <DecksProvider>
-          <SpinnerScreen />
-        </DecksProvider>
+      <DecksProvider>
+        <SpinnerScreen />
+      </DecksProvider>
     </GestureHandlerRootView>
   );
 }

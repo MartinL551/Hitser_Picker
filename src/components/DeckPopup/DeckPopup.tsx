@@ -39,12 +39,7 @@ export const DeckPopup = ({ deck, onClose }: Props) => {
   }));
 
   return (
-    <Modal
-      animationType="fade"
-      transparent={true}
-      visible={deck != null}
-      onRequestClose={onClose}
-    >
+    <Modal animationType="slide" transparent={true} visible={deck != null} onRequestClose={onClose}>
       <View className={styles.modalContainer}>
         <View className={styles.deckTypePopup}>
           <View className={styles.popupIconContainer}>
@@ -65,7 +60,6 @@ export const DeckPopup = ({ deck, onClose }: Props) => {
     </Modal>
   );
 };
-
 
 const styles = {
   deckTypePopup: `items-center justify-center bg-blue-400 border-4 border-blue-500 m-auto p-4 rounded-[50] w-5/6 m-auto bg-opacity-80`,

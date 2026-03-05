@@ -23,8 +23,7 @@ type Props = {
   onResult: (deck: DeckItemInterface | null) => void;
 };
 
-
-export const Spinner = ({onResult}: Props) => {
+export const Spinner = ({ onResult }: Props) => {
   const angle = useSharedValue(0);
   const startAngle = useSharedValue(0);
   const startRotation = useSharedValue(0);
@@ -33,6 +32,22 @@ export const Spinner = ({onResult}: Props) => {
   const CX = WHEEL_SIZE / 2;
   const CY = WHEEL_SIZE / 2;
   const { entries } = useDecks();
+
+  const updatePopupState = React.useCallback(
+    (finalAngle: number) => {
+      const activeDecks = entries.filter((d) => d.active);
+      if (activeDecks.length === 0) onResult(null);
+
+      const selectedDeck = getSelectedDeck(finalAngle, entries);
+
+      if (selectedDeck) {
+        onResult(selectedDeck);
+      } else {
+        onResult(null);
+      }
+    },
+    [entries, onResult]
+  );
 
   const panGesture = Gesture.Pan()
     .onBegin((e) => {
@@ -86,19 +101,18 @@ export const Spinner = ({onResult}: Props) => {
       // workout target angle from the start angle value.
       const start = angle.value;
       const target = start + spinDistanceWithMin;
-
-      const hasActivedeck = entries.filter((deck) => deck.active === true).length > 0;
       angle.value = withTiming(
         target,
         { duration: durationMs, easing: Easing.bezier(0.21, 0.68, 0, 0.95) },
         (complete) => {
+          'worklet';
 
-          if (complete && hasActivedeck) {
-            const finalAngle = ((target % 360) + 360) % 360;
-            scheduleOnRN(() => {
-              updatePopupState(finalAngle, entries, onResult);
-            });
+          if (!complete) {
+            return;
           }
+
+          const finalAngle = ((target % 360) + 360) % 360;
+          scheduleOnRN(updatePopupState, finalAngle);
         }
       );
     });
@@ -143,20 +157,6 @@ export const Spinner = ({onResult}: Props) => {
   );
 };
 
-function updatePopupState(
-  finalAngle: number,
-  deckValues: DeckItemsInterface,
-  onResult: (deck: DeckItemInterface | null) => void,
-) {
-  const selectedDeck = getSelectedDeck(finalAngle, deckValues);
-
-  if(selectedDeck) {
-    onResult(selectedDeck);
-  } else { 
-    onResult(null);
-  }
-}
-
 const styles = {
   stylusContainer: 'mr-1',
   recordPlayerContainer: 'flex p-5',
@@ -192,10 +192,10 @@ function isSelecteddeck(
 
 function getSelectedDeck(
   spinnerPosition: number,
-  deckValues: DeckItemsInterface,
+  deckValues: DeckItemsInterface
 ): null | DeckItemInterface {
-  for(let i = 0; i < deckValues.length; i++) {
-    if(isSelecteddeck(spinnerPosition, deckValues, deckValues[i])) {
+  for (let i = 0; i < deckValues.length; i++) {
+    if (isSelecteddeck(spinnerPosition, deckValues, deckValues[i])) {
       return deckValues[i];
     }
   }
