@@ -28,7 +28,7 @@
         "backgroundColor": "#313131"
       },
       "package": "com.martin.music_game_selector",
-      "versionCode": 1
+      "versionCode": "1.0.1"
     },
     "extra": {
       "debug": {
