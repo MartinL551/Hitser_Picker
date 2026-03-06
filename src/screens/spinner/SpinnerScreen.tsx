@@ -33,22 +33,22 @@ export const SpinnerScreen = () => {
   };
 
   return (
-    <SafeAreaView className={styles.screenContainer}  style={{ paddingBottom: insets.bottom}}>
-        <TutorialOverlay visible={showTutorial} onDismiss={dismiss} />
-        <View className={styles.spinnerContainer}>
-          <Spinner onResult={setSelectedDeck} />
-        </View>
-        <View className={styles.decksTitleContainer}>
-          <Text className={styles.decksTitle}> {t('deckTitle', { ns: 'ui' })} </Text>
-        </View>
-        <View className={styles.decksContainer}>
-          {entries.map((deck: DeckItemInterface, index: number) => (
-            <DeckType key={index} index={index} deck={deck} />
-          ))}
-        </View>
-        <View>
-          <DeckPopup onClose={closePopup} deck={selectedDeck} />
-        </View>
+    <SafeAreaView className={styles.screenContainer} style={{ paddingBottom: insets.bottom }}>
+      <TutorialOverlay visible={showTutorial} onDismiss={dismiss} />
+      <View className={styles.spinnerContainer}>
+        <Spinner onResult={setSelectedDeck} />
+      </View>
+      <View className={styles.decksTitleContainer}>
+        <Text className={styles.decksTitle}> {t('deckTitle', { ns: 'ui' })} </Text>
+      </View>
+      <View className={styles.decksContainer}>
+        {entries.map((deck: DeckItemInterface, index: number) => (
+          <DeckType key={index} index={index} deck={deck} />
+        ))}
+      </View>
+      <View>
+        <DeckPopup onClose={closePopup} deck={selectedDeck} />
+      </View>
     </SafeAreaView>
   );
 };
