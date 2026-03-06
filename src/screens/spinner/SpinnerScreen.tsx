@@ -18,7 +18,6 @@ export const SpinnerScreen = () => {
   const closePopup = useCallback(() => setSelectedDeck(null), []);
   useAutoDismiss(selectedDeck != null, closePopup, 5000);
 
-
   useEffect(() => {
     (async () => {
       const currentState = await loadShownTutorialState();
